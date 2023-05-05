@@ -1,0 +1,13 @@
+<!doctype html>
+<html>
+    <body>
+	{% extends "base.html" %} <!--Inkludera base.html, som innehåller navbar som ska inkluderas i varje fil-->
+	{% block content %}
+        	<h1>Hello, {{ user.username }}!</h1>
+		{% for post in posts %}
+        	<div><p>{{ post.author.username }} says: <b>{{ post.body }}</b></p></div>
+        	{% endfor %}
+		<a href="/collections">Klicka på mig</a>
+	{% endblock %}
+    </body>
+</html>

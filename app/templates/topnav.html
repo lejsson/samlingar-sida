@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="/static/style.css" rel="stylesheet" type="text/css" media="all">
+        {% if title %}
+        <title>{{ title }}</title>
+        {% else %}
+        <title>Err</title>
+        {% endif %}
+</head>
+<body>
+	<div id="topnav">
+		<img class="menu" src="/static/images/elements/bars.svg" alt="menu">
+
+		<a class="logo" href="/index">
+			<img src="/static/images/elements/logo.svg" alt="logo icon">
+
+			<div class="logotext">
+				Kerätä
+			</div>
+		</a>
+
+		{% if user %}
+		<a href="/login" class="user">
+			<img src="/static/images/elements/user.svg" alt="user">
+			{{ user.username }}
+			<img src="/static/images/elements/arrow.svg" alt="down arrow">
+		</a>
+		{% endif %}
+	</div>
+	{% block content %}{% endblock %} <!--Innehållet börjar-->
+</body>
+</html>

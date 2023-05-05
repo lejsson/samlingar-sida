@@ -1,0 +1,32 @@
+{% extends "base.html" %} <!--Inkludera base.html, som innehåller navbar som ska inkluderas i varje fil-->
+{% block content %}
+		<!--Så ska ha en loop som går igenom alla ens inlägg och då-->
+		<!--<div class="collections-header">
+			Your collections
+		</div>
+		-->
+		<h1>Your collections</h1>
+		<div class="post-box-container">
+			<div class="post-box">
+				<img class="add-image" src="/static/images/elements/bigplus.svg">
+				<div class="add-name">Add new collection</div>
+			</div>
+
+			<div class="post-box">
+				<!--<img src="/static/images/dibby/98f94183fb49b0ada2cc1c52e3759c260cba1ae7.jpg">-->
+				<img class="standard-image" src="/static/images/dibby/cd88afa6ccd1470830e1fabfd027cb7b39b32174.jpg">
+				<div class="text">
+					<div class="name">Cat images</div>
+					<div class="items">20 items</div>
+				</div>
+			</div>
+
+			<div class="post-box">
+				<img class="standard-image" src="/static/images/vinylcollection.jpg">
+				<div class="text">
+					<div class="name">Vinyl</div>
+					<div class="items">10 items</div>
+				</div>
+			</div>
+		</div>
+{% endblock %}
