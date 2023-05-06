@@ -12,7 +12,7 @@
 	<div id="topnav">
 		<img class="menu" src="/static/images/elements/bars.svg" alt="menu">
 
-		<a class="logo" href="/index">
+		<a class="logo" href="{{ url_for('index') }}">
 			<img src="/static/images/elements/logo.svg" alt="logo icon">
 
 			<div class="logotext">
@@ -21,13 +21,13 @@
 		</a>
 
 		{% if user %}
-		<a href="/login" class="user">
+		<a href="{{ url_for('login') }}" class="user">
 			<img src="/static/images/elements/user.svg" alt="user">
 			{{ user.username }}
 			<img src="/static/images/elements/arrow.svg" alt="down arrow">
 		</a>
 		{% else %}
-		<a href="/login" class="user"> <!--Gör istället två stycken, en sign up och en sign in bredivd eller nåt-->
+		<a href="{{ url_for('login') }}" class="user"> <!--Gör istället två stycken, en sign up och en sign in bredivd eller nåt-->
 			Sign in
 		</a>
 		{% endif %}
