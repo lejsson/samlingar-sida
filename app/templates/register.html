@@ -1,11 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Sign In</h1>
+<h1>Sign up</h1>
 <div class="form-container">
-	<form action="" method="post" novalidate>
-	{{ form.hidden_tag() }}
-		<!--<p style="margin-top: 20px;">-->
+	<form action="" method="post">
+		{{ form.hidden_tag() }}
 		<p>
 			{{ form.username.label }}:<br>
 			{{ form.username(size=32) }}<br>
@@ -20,10 +19,14 @@
 			<span class="form-error">*{{ error }}</span>
 			{% endfor %}
 		</p>
-		<p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+		<p>
+			{{ form.password2.label }}:<br>
+			{{ form.password2(size=32) }}<br>
+			{% for error in form.password2.errors %}
+			<span class="form-error">*{{ error }}</span>
+			{% endfor %}
+		</p>
 		<p>{{ form.submit() }}</p>
 	</form>
-	<br>
-	<p style="font-size: 18px; margin-top: -5px;">Don't have an account yet? <a href="{{ url_for('register') }}" style="text-decoration: underline;">Sign up now</a></p>
 </div>
 {% endblock %}

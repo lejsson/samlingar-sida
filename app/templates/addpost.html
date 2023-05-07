@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Sign up</h1>
+<div class="form-container">
+	<form action="" method="post">
+		{{ form.hidden_tag() }}
+		<p>
+			{{ form.title.label }}:<br>
+			{{ form.title(size=32) }}<br>
+			{% for error in form.title.errors %}
+			<span class="form-error">*{{ error }}</span>
+			{% endfor %}
+		</p>
+		<p>
+			{{ form.description.label }}:<br>
+			{{ form.description(size=32) }}<br>
+			{% for error in form.description.errors %}
+			<span class="form-error">*{{ error }}</span>
+			{% endfor %}
+		</p>
+		<p>
+			{{form.picture.label}} <br>
+			{{form.picture}} <br>
+		</p>
+		<p>{{ form.submit() }}</p>
+	</form>
+</div>
+{% endblock %}

@@ -7,9 +7,15 @@
         {% if title %}
         <title>{{ title }}</title>
         {% endif %}
+	
+	<script>document.getElementById("user").addEventListener('mousedown', function(e){ e.preventDefault(); }, false);</script>
 
-	<script>
+	<script> /* Sidenav */
 	        function openNav() {
+			if (document.getElementById("user-dropdown").style.getPropertyValue('style') != "none") {
+				closeDropdown()
+			}
+
 	        	document.getElementById("mySidenav").style.width = "250px";
 			document.addEventListener("keydown", event => { //Stäng sidenav om man trycker på escape
 				if (event.keyCode == 27) { //27 är keycode för escape
@@ -22,21 +28,58 @@
 	        	document.getElementById("mySidenav").style.width = "0";
 	        }
 	</script>
+
+	<script> /* User dropdown */
+		/* TODO: ändra rotation på arrow 180 grader när man togglar */
+	        function openDropdown() {
+			console.log("Opening user dropdown")
+			if (document.getElementById("mySidenav").style.getPropertyValue('width') != "0") {
+				closeNav()
+			}
+
+	        	document.getElementById("arrow").style.transform = "rotate(180deg) scaleX(-1)";
+
+	        	document.getElementById("user-dropdown").style.display = "block";
+			document.addEventListener("keydown", event => { //Stäng sidenav om man trycker på escape
+				if (event.keyCode == 27) { //27 är keycode för escape
+					closeDropdown();
+				}
+			});
+			document.addEventListener("mousedown", event => { //Stäng sidenav om man trycker på escape
+				closeDropdown();
+			});
+	        }
+	              
+	        function closeDropdown() {
+			console.log("Closing user dropdown");
+	        	document.getElementById("user-dropdown").style.display = "none";
+	        	document.getElementById("arrow").style.transform = "rotate(0deg) scaleX(-1)";
+	        }
+
+		function toggleDropdown() {
+			if (document.getElementById("user-dropdown").style.getPropertyValue('display') == "block") {
+				closeDropdown()
+			}
+			else {
+				openDropdown()
+			}
+		}
+	</script>
 </head>
 <body>
-	<div id="mySidenav" class="sidenav">
-		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-		<a href="{{ url_for('index') }}">Home</a>
-		<a href="#">About</a>
-		<a href="#">Contact</a>
-		<!--<a href="#">Services</a>-->
-		<!--<a href="#">Clients</a>-->
-	</div>
-
 	<div id="topnav">
-		<span onclick="openNav()">
+		<div id="mySidenav" class="sidenav">
+			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+			<a href="{{ url_for('index') }}">Home</a>
+			<a href="#">About</a>
+			<a href="#">Contact</a>
+			<!--<a href="#">Services</a>-->
+			<!--<a href="#">Clients</a>-->
+		</div>
+
+		<div onclick="openNav()">
 			<img class="menu" src="/static/images/elements/bars.svg" alt="menu">
-		</span>
+		</div>
 
 		<a class="logo" href="{{ url_for('index') }}">
 			<img src="/static/images/elements/logo.svg" alt="logo icon">
@@ -51,11 +94,17 @@
 			Sign in
 		</a>
 		{% else %}
-		<a href="{{ url_for('login') }}" class="user">
-			<img src="/static/images/elements/user.svg" alt="user">
-			{{ current_user.username }}
-			<img src="/static/images/elements/arrow.svg" alt="down arrow">
-		</a>
+		<span onclick="toggleDropdown()" class="dropdown">
+			<div href="{{ url_for('login') }}" id="user" class="user">
+				<img src="/static/images/elements/user.svg" style="padding-right: 5px" alt="user" width="25">
+				{{ current_user.username }}
+				<img src="/static/images/elements/arrow.svg" id="arrow" alt="down arrow" width="28">
+			</div>
+	  		<div onclick="closeDropdown()" id="user-dropdown" class="dropdown-content">
+				<a href="{{ url_for('collections') }}">Your colletions</a>
+				<a href="{{ url_for('logout') }}">Sign out</a> <br>
+			</div>
+		</span>
 		{% endif %}
 	</div>
         {% with messages = get_flashed_messages() %}
@@ -68,5 +117,7 @@
         {% endif %}
         {% endwith %}
 	{% block content %}{% endblock %} <!--Innehållet börjar-->
+	<!--Gör en footare här lolllllllllllllllllllllllllllllll-->
+	<!--<div class="page-footer"></div>-->
 </body>
 </html>
