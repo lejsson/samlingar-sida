@@ -1,0 +1,3 @@
+#virtual enviroment, kan inte bara migrera till annan dator
+venv
+__pycache__

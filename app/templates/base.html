@@ -7,10 +7,36 @@
         {% if title %}
         <title>{{ title }}</title>
         {% endif %}
+
+	<script>
+	        function openNav() {
+	        	document.getElementById("mySidenav").style.width = "250px";
+			document.addEventListener("keydown", event => { //Stäng sidenav om man trycker på escape
+				if (event.keyCode == 27) { //27 är keycode för escape
+					closeNav();
+				}
+			});
+	        }
+	              
+	        function closeNav() {
+	        	document.getElementById("mySidenav").style.width = "0";
+	        }
+	</script>
 </head>
 <body>
+	<div id="mySidenav" class="sidenav">
+		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+		<a href="{{ url_for('index') }}">Home</a>
+		<a href="#">About</a>
+		<a href="#">Contact</a>
+		<!--<a href="#">Services</a>-->
+		<!--<a href="#">Clients</a>-->
+	</div>
+
 	<div id="topnav">
-		<img class="menu" src="/static/images/elements/bars.svg" alt="menu">
+		<span onclick="openNav()">
+			<img class="menu" src="/static/images/elements/bars.svg" alt="menu">
+		</span>
 
 		<a class="logo" href="{{ url_for('index') }}">
 			<img src="/static/images/elements/logo.svg" alt="logo icon">
@@ -20,15 +46,15 @@
 			</div>
 		</a>
 
-		{% if user %}
-		<a href="{{ url_for('login') }}" class="user">
-			<img src="/static/images/elements/user.svg" alt="user">
-			{{ user.username }}
-			<img src="/static/images/elements/arrow.svg" alt="down arrow">
-		</a>
-		{% else %}
+		{% if current_user.is_anonymous %}
 		<a href="{{ url_for('login') }}" class="user"> <!--Gör istället två stycken, en sign up och en sign in bredivd eller nåt-->
 			Sign in
+		</a>
+		{% else %}
+		<a href="{{ url_for('login') }}" class="user">
+			<img src="/static/images/elements/user.svg" alt="user">
+			{{ current_user.username }}
+			<img src="/static/images/elements/arrow.svg" alt="down arrow">
 		</a>
 		{% endif %}
 	</div>

@@ -47,6 +47,39 @@ a {
 	transform: scale(1.05); /* Resize */
 }
 
+.sidenav {
+	background-color: #666666;
+	height: 100%;
+	width: 0;
+	position: fixed;
+	z-index: 1; /* Stay on top */
+	top: 0; /* Stay at the top */
+	left: 0;
+	overflow-x: hidden; /* Disable horizontal scroll */
+	padding-top: 60px; /* Place content 60px from the top */
+	transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidenav a {
+	padding: 8px 8px 8px 32px;
+	font-size: 25px;
+	display: block;
+	transition: 0.3s;
+}
+
+.sidenav a:hover {
+	color: #decd87;
+}
+
+.sidenav .closebtn {
+	position: absolute;
+	top: 0;
+	right: 25px;
+	font-size: 36px;
+	margin-left: 50px;
+	text-decoration: none; /* inget understryck på x:et */
+}
+
 .logo {
 	display: flex;
 	/*text-decoration: none;*/
@@ -58,6 +91,7 @@ a {
 	margin-left: 100px;
 	cursor: pointer;
 }
+
 
 .logo:hover {
 	transition: transform .2s;
@@ -235,4 +269,9 @@ input {
 	border: none;
 	cursor: pointer;
 	font-size: 70%;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
 }
