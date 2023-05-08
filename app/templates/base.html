@@ -45,9 +45,13 @@
 					closeDropdown();
 				}
 			});
-			document.addEventListener("mousedown", event => { //Stäng sidenav om man trycker på escape
+			/* document.addEventListener("mousedown", event => { //Stäng sidenav om man trycker på escape
+				//if (!event.target.classList.contains('dropdown-content')) {
+				if (!event.target.matches('dropdown-content')) {
+				        // your code
+				    }
 				closeDropdown();
-			});
+			}); */
 	        }
 	              
 	        function closeDropdown() {
@@ -107,6 +111,7 @@
 		</span>
 		{% endif %}
 	</div>
+	<!--
         {% with messages = get_flashed_messages() %}
         {% if messages %}
         <ul>
@@ -116,6 +121,7 @@
         </ul>
         {% endif %}
         {% endwith %}
+	-->
 	{% block content %}{% endblock %} <!--Innehållet börjar-->
 	<!--Gör en footare här lolllllllllllllllllllllllllllllll-->
 	<!--<div class="page-footer"></div>-->

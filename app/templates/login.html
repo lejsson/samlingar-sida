@@ -2,6 +2,7 @@
 
 {% block content %}
 <h1>Sign In</h1>
+<p class="center" style="margin-top: 30px;"> Sign in with the username "user93" and password "mypassword" for an example.</p>
 <div class="form-container">
 	<form action="" method="post" novalidate>
 	{{ form.hidden_tag() }}
@@ -24,6 +25,6 @@
 		<p>{{ form.submit() }}</p>
 	</form>
 	<br>
-	<p style="font-size: 18px; margin-top: -5px;">Don't have an account yet? <a href="{{ url_for('register') }}" style="text-decoration: underline;">Sign up now</a></p>
+	<p style="font-size: 18px; margin-top: -5px;">Don't have an account yet? <a href="{{ url_for('register') }}" style="text-decoration: underline;">Sign up now</a></p><br>
 </div>
 {% endblock %}

@@ -3,7 +3,7 @@
 {% block content %}
 <h1>Sign up</h1>
 <div class="form-container">
-	<form action="" method="post">
+	<form action="" method="post" enctype="multipart/form-data">
 		{{ form.hidden_tag() }}
 		<p>
 			{{ form.title.label }}:<br>
@@ -20,8 +20,11 @@
 			{% endfor %}
 		</p>
 		<p>
-			{{form.picture.label}} <br>
-			{{form.picture}} <br>
+			{{form.image.label}}:<br>
+			{{form.image(size=64)}} <br>
+			{% for error in form.image.errors %}
+			<span class="form-error">*{{ error }}</span>
+			{% endfor %}
 		</p>
 		<p>{{ form.submit() }}</p>
 	</form>
