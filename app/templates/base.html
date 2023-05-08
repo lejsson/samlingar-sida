@@ -3,12 +3,12 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link href="/static/style.css" rel="stylesheet" type="text/css" media="all">
+	<link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" type="text/css" media="all">
         {% if title %}
         <title>{{ title }}</title>
         {% endif %}
 	
-	<script>document.getElementById("user").addEventListener('mousedown', function(e){ e.preventDefault(); }, false);</script>
+	<!--<script>document.getElementById("user").addEventListener('mousedown', function(e){ e.preventDefault(); }, false);</script>-->
 
 	<script> /* Sidenav */
 	        function openNav() {
@@ -82,11 +82,11 @@
 		</div>
 
 		<div onclick="openNav()">
-			<img class="menu" src="/static/images/elements/bars.svg" alt="menu">
+			<img class="menu" src="{{ url_for('static', filename='images/elements/bars.svg') }}" alt="menu">
 		</div>
 
 		<a class="logo" href="{{ url_for('index') }}">
-			<img src="/static/images/elements/logo.svg" alt="logo icon">
+			<img src="{{ url_for('static', filename='images/elements/logo.svg') }}" alt="logo icon">
 
 			<div class="logotext">
 				Kerätä
@@ -100,13 +100,13 @@
 		{% else %}
 		<span onclick="toggleDropdown()" class="dropdown">
 			<div href="{{ url_for('login') }}" id="user" class="user">
-				<img src="/static/images/elements/user.svg" style="padding-right: 5px" alt="user" width="25">
+				<img src="{{ url_for('static', filename='images/elements/user.svg') }}" style="padding-right: 5px" alt="user" width="25">
 				{{ current_user.username }}
-				<img src="/static/images/elements/arrow.svg" id="arrow" alt="down arrow" width="28">
+				<img src="{{ url_for('static', filename='images/elements/arrow.svg') }}" id="arrow" alt="down arrow" width="28">
 			</div>
 	  		<div onclick="closeDropdown()" id="user-dropdown" class="dropdown-content">
-				<a href="{{ url_for('collections') }}">Your colletions</a>
-				<a href="{{ url_for('logout') }}">Sign out</a> <br>
+				<a style="margin-bottom: 20px" href="{{ url_for('collections') }}">Your colletions</a>
+				<a class="submit" href="{{ url_for('logout') }}">Sign out</a> <br>
 			</div>
 		</span>
 		{% endif %}

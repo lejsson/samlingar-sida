@@ -63,14 +63,14 @@ UPLOAD_FOLDER = '/static'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-# @app.route('/addpost', methods=['GET', 'POST'])
-# def addpost():
-    # # pass
-    # form = NewPostForm()
-    # if form.validate_on_submit():
-        # post = Post(title=form.title, description=form.description, author=current_user)
-        # db.session.add(post)
-        # db.session.commit()
-        # image = form.image
-        # return redirect('index')
-    # return render_template('addpost.html', title='Add new post', form=form)
+@app.route('/addpost', methods=['GET', 'POST'])
+def addpost():
+    # pass
+    form = NewPostForm()
+    if form.validate_on_submit():
+        post = Post(title=form.title, description=form.description, author=current_user)
+        db.session.add(post)
+        db.session.commit()
+        image = form.image
+        return redirect('index')
+    return render_template('addpost.html', title='Add new post', form=form)
