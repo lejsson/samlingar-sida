@@ -99,13 +99,13 @@
 		</a>
 		{% else %}
 		<span onclick="toggleDropdown()" class="dropdown">
-			<div href="{{ url_for('login') }}" id="user" class="user">
+			<div id="user" class="user">
 				<img src="{{ url_for('static', filename='images/elements/user.svg') }}" style="padding-right: 5px" alt="user" width="25">
 				{{ current_user.username }}
 				<img src="{{ url_for('static', filename='images/elements/arrow.svg') }}" id="arrow" alt="down arrow" width="28">
 			</div>
 	  		<div onclick="closeDropdown()" id="user-dropdown" class="dropdown-content">
-				<a style="margin-bottom: 20px" href="{{ url_for('collections') }}">Your colletions</a>
+				<a href="{{ url_for('collections') }}">Your colletions</a>
 				<a class="submit" href="{{ url_for('logout') }}">Sign out</a> <br>
 			</div>
 		</span>

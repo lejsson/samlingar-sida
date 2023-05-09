@@ -59,7 +59,7 @@ def register():
         return redirect(url_for('login'))
     return render_template('register.html', title='Sign up', form=form)
 
-UPLOAD_FOLDER = '/static'
+UPLOAD_FOLDER = '/static/user_data/'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
