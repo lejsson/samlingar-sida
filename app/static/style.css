@@ -37,7 +37,7 @@ a:hover:not(.logo):not(.user):not(.submit) {
 }
 
 #topnav .menu {
-	margin-left: 40px;
+	margin-left: 45px;
 	cursor: pointer;
 	width: 42px;
 }

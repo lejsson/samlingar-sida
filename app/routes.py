@@ -13,11 +13,15 @@ def index():
     # return render_template('index.html', title='Home', user=data.user, posts=data.posts)
     posts = current_user.posts.all()
     user_data_dir = "/static/user_data/" + current_user.username
-    return render_template('index.html', title='Home', posts=posts, file_dir=user_data_dir)
+    return _ender_template('index.html', title='Home', posts=posts, file_dir=user_data_dir)
 
-@app.route('/collections')
-def collections():
-    return render_template('collections.html', title='Collections', user=data.user, posts=data.posts)
+# @app.route('/collections')
+# def collections():
+    # return render_template('collections.html', title='Collections', user=data.user, posts=data.posts)
+
+# @app.route('/post_content')
+# def post_content():
+    # return render_template('post-content.html', title=parent, user=data.user, posts=data.posts)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
