@@ -11,7 +11,9 @@ from werkzeug.utils import secure_filename
 @login_required
 def index():
     # return render_template('index.html', title='Home', user=data.user, posts=data.posts)
-    return render_template('index.html', title='Home', posts=data.posts)
+    posts = current_user.posts.all()
+    user_data_dir = "/static/user_data/" + current_user.username
+    return render_template('index.html', title='Home', posts=posts, file_dir=user_data_dir)
 
 @app.route('/collections')
 def collections():

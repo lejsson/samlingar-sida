@@ -17,7 +17,7 @@ class RegistrationForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField(
         'Repeat Password', validators=[DataRequired(), EqualTo('password')])
-    submit = SubmitField('Register')
+    submit = SubmitField('Sign up')
 
     def validate_username(self, username):
         user = User.query.filter_by(username=username.data).first()
@@ -29,3 +29,9 @@ class NewPostForm(FlaskForm):
     description = StringField('Description (optional)')
     image = FileField('General image for the post (optional)', [DataRequired()])
     submit = SubmitField('Add post')
+
+class NewPostConentForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    description = StringField('Description (optional)')
+    image = FileField('Image for the post content', [DataRequired()])
+    submit = SubmitField('Add content')

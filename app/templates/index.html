@@ -4,10 +4,18 @@
 	{% extends "base.html" %} <!--Inkludera base.html, som innehåller navbar som ska inkluderas i varje fil-->
 	{% block content %}
 		{% for post in posts %}
-        	<div><p>{{ post.author.username }} says: <b>{{ post.body }}</b></p></div>
+			{% set image_dir = file_dir + '/' + post.title + '/' %}
+			<div class="post-box">
+				<img class="standard-image" src="{{ url_for('image_dir', filename='post.image') }}">
+				<div class="text">
+					<div class="name">{{ post.title }}</div>
+					<div class="items">20 items</div> <!--Här ska det vara lol att den kör Post.query på usern-->
+				</div>
+			</div>
+        	<div><p>{{ post.author.username }} says: <b>{{ post.title }}</b></p></div>
         	{% endfor %}
+
 		<a href="{{ url_for('collections') }}">Klicka på mig</a>
-	<br>
 	{% endblock %}
     </body>
 </html>
