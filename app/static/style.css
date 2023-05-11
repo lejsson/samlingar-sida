@@ -11,7 +11,6 @@ body {
 	font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif;
 	font-size: 23px;
 	overflow-x: hidden; /* Strunta i att scrolla åt sidan */
-	overflow-y: hidden; /* Strunta i att scrolla åt sidan */
 	background-color: #717171;
 	margin-bottom: 250px; /* Mer utrymme längst ned på sidan */
 }
@@ -37,7 +36,7 @@ a:hover:not(.logo):not(.user):not(.submit) {
 }
 
 #topnav .menu {
-	margin-left: 45px;
+	margin-left: 50px;
 	cursor: pointer;
 	width: 42px;
 }
@@ -338,6 +337,17 @@ input {
 	border: none;
 	cursor: pointer;
 	font-size: 70%;
+}
+
+.signup-text {
+	font-size: 17px; 
+	margin-top: -5px;
+}
+
+.signup-text a {
+	text-decoration: underline;
+	font-weight: bold;
+	text-underline-offset: 3px
 }
 
 @media screen and (max-height: 450px) {

@@ -11,12 +11,22 @@
 			</a>
 
 			{% for post in posts %}
+				{% set items = [0] %}
+				{% for postcontent in postcontents %}
+					{% if post.id == postcontent.parent %}
+						{% if items.append(items.pop() + 1) %}{% endif %}
+					{% endif %}
+				{% endfor %}
 				{% set image_path = file_dir + '/' + post.title + '/' + post.image %}
 				<div class="post-box">
 					<img class="standard-image" src="{{ image_path }}">
 					<div class="text">
 						<div class="name">{{ post.title }}</div>
-						<div class="items">20 items</div> <!--Här ska det vara lol att den kör Post.query på usern-->
+						{% if items[0] == 1 %}
+							<div class="items">{{ items[0] }} item</div> <!--Här ska det vara lol att den kör Post.query på usern-->
+						{% else %}
+							<div class="items">{{ items[0] }} items</div> <!--Här ska det vara lol att den kör Post.query på usern-->
+						{% endif %}
 					</div>
 				</div>
         		{% endfor %}

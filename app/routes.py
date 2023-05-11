@@ -1,19 +1,37 @@
-from flask import render_template, request, url_for, redirect, flash
-from app import app, db, data
+from flask import render_template, request, url_for, redirect, flash, send_from_directory
+from app import app, db
 from app.forms import LoginForm, RegistrationForm, NewPostForm
 from flask_login import current_user, login_user, login_required, logout_user
-from app.models import User, Post
+from app.models import User, Post, PostContent 
 from werkzeug.urls import url_parse
 from werkzeug.utils import secure_filename
+import os.path
+
+#För att får items i post använd den och sen counta hur många de innehålla
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 @app.route('/')
 @app.route('/index')
 @login_required
 def index():
+    #hej = current_user.posts.all()
+    #test = PostContent.query.get(current_user.id)
     # return render_template('index.html', title='Home', user=data.user, posts=data.posts)
+    # hejsan = current_user.postcontents.all()
+    # items = 0
+
+    # for item in current_user.postcontents.all()
+        # if item.parent == post.id:
+            # items += 1
+
+    # current_user.posts.all()[]
     posts = current_user.posts.all()
+    postcontents = current_user.postcontents.all()
     user_data_dir = "/static/user_data/" + current_user.username
-    return _ender_template('index.html', title='Home', posts=posts, file_dir=user_data_dir)
+    return render_template('index.html', title='Home', posts=posts, postcontents=postcontents, file_dir=user_data_dir)
 
 # @app.route('/collections')
 # def collections():

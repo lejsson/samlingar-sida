@@ -4,8 +4,12 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" type="text/css" media="all">
+	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" sizes="any">
+	<!--<link rel="icon" href="{{ '/static/images/elements/logo.svg' }}" sizes="64x64">-->
         {% if title %}
         <title>{{ title }}</title>
+	{% else %}
+        <title>Kerätä</title>
         {% endif %}
 	
 	<!--<script>document.getElementById("user").addEventListener('mousedown', function(e){ e.preventDefault(); }, false);</script>-->
