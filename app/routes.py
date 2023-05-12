@@ -17,29 +17,24 @@ def favicon():
 @app.route('/index')
 @login_required
 def index():
-    #hej = current_user.posts.all()
-    #test = PostContent.query.get(current_user.id)
-    # return render_template('index.html', title='Home', user=data.user, posts=data.posts)
-    # hejsan = current_user.postcontents.all()
-    # items = 0
-
-    # for item in current_user.postcontents.all()
-        # if item.parent == post.id:
-            # items += 1
-
-    # current_user.posts.all()[]
     posts = current_user.posts.all()
     postcontents = current_user.postcontents.all()
     user_data_dir = "/static/user_data/" + current_user.username
     return render_template('index.html', title='Home', posts=posts, postcontents=postcontents, file_dir=user_data_dir)
 
-# @app.route('/collections')
-# def collections():
-    # return render_template('collections.html', title='Collections', user=data.user, posts=data.posts)
-
-# @app.route('/post_content')
-# def post_content():
-    # return render_template('post-content.html', title=parent, user=data.user, posts=data.posts)
+# @app.route('/post_content/<current_user>', methods=['GET', 'POST'])
+@app.route('/post_content', methods=['GET', 'POST'])
+# def post_content(current_user):
+def post_content():
+    current_post_id = int(request.args.get("current_post_id"))
+    posts = Post.query.all()
+    current_post = posts[current_post_id - 1]
+    # current_post = posts[posts.index(current_post)]
+    postcontents = current_user.postcontents.all()
+    user_data_dir = "/static/user_data/" + current_user.username
+    return render_template('post_content.html', postcontents=postcontents, current_post=current_post, file_dir=user_data_dir)
+    # return render_template('post_content.html', postcontents=postcontents, current_post=current_post)
+    # return render_template('post_content.html', title=post.title, postcontents=postcontents) # Hur jag ska skicka title
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

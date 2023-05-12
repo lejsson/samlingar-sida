@@ -1,0 +1,25 @@
+{% extends "base.html" %} <!--Inkludera base.html, som innehåller navbar som ska inkluderas i varje fil-->
+
+{% block content %}
+<h1>{{ current_post.title }}</h1>
+
+<div class="post-box-container">
+	<a href="{{ url_for('addpost') }}" class="post-box">
+		<img class="add-image" src="/static/images/elements/bigplus.svg" alt="add icon">
+		<div class="add-name">Add to collection</div>
+	</a>
+
+	{% for post in postcontents %}
+		{% if post.parent == current_post.id %}
+			{% set image_path = file_dir + '/' + current_post.title + '/' + post.image %}
+			<a class="post-box" href="{{ url_for('index') }}">
+				<img class="standard-image" src="{{ image_path }}" alt="{{ post.image }}">
+				<div class="text">
+					<div class="name">{{ post.title }}</div>
+				</div>
+			</a>
+		{% endif %}
+	{% endfor %}
+</div>
+
+{% endblock %}
