@@ -10,9 +10,9 @@ body {
 	/*font-family: Arial, Helvetica, sans-serif;*/
 	font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif;
 	font-size: 23px;
-	overflow-x: hidden; /* Strunta i att scrolla åt sidan */
+	overflow-x: hidd5n; /* Strunta i att scrolla åt sidan */
 	background-color: #717171;
-	margin-bottom: 250px; /* Mer utrymme längst ned på sidan */
+	margin-bottom: 120px;
 }
 
 a {
@@ -29,8 +29,13 @@ a:hover:not(.logo):not(.user):not(.submit) {
 	display: flex;
 	background-color: #666666ff;
 	align-items: center;
-	height: 94px;
+	height: 80px;
 	border-bottom: 5px solid #decd87;
+	overflow: hidden;
+	width: 100%;
+	position: sticky;
+	top: 0;
+	z-index: 100; /* Gör så att element som blir påverkade av transform ej dyker upp ovanpå navbaren */
 	/* #decd87 */ /*Gula färgen lolle*/
 }
 
@@ -86,7 +91,7 @@ a:hover:not(.logo):not(.user):not(.submit) {
 }
 
 #topnav .logo {
-	margin-left: 50px;
+	margin-left: 40px;
 	cursor: pointer;
 }
 
@@ -118,7 +123,7 @@ a:hover:not(.logo):not(.user):not(.submit) {
 	padding: 10px;
 	padding-inline: 24px;
 	/*border-radius: 23.513px;*/
-	border-radius: 17px;
+	border-radius: 15px;
 	border-width: 0;
 	border: none;
 	color: white;
@@ -134,9 +139,6 @@ a:hover:not(.logo):not(.user):not(.submit) {
 }
 
 #topnav .user img {
-	/*width: 19%;*/
-	/*width: 20px*/
-	/*padding: 20px*/
 	transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -165,7 +167,7 @@ a:hover:not(.logo):not(.user):not(.submit) {
 	/*padding-bottom: 20px;*/
 	/*padding-top: 20px;*/
 	padding: 20px;
-	z-index: 1;
+	z-index: 200;
 	transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -235,6 +237,7 @@ h1 {
 	width: 400px;
 	cursor: pointer;
 	border-radius: 20px;
+	height: 548px;
 	/*border-width: 3px;*/
 	/*border-radius: 20px;*/
 	/*border-style: solid;*/
@@ -279,7 +282,8 @@ h1 {
 .post-box .add-name {
 	font-weight: bold;
 	margin-top: 35px;
-	font-size: 134%;
+	/*font-size: 134%;*/
+	font-size: 32px;
 	text-align: left;
 	text-decoration: underline;
 	text-decoration-thickness: 3px;
@@ -293,6 +297,7 @@ h1 {
 .post-box:hover {
 	transition: transform .2s;
 	transform: scale(1.04); /* Resize */
+	overflow: hidden;
 }
 
 .form-container {
@@ -349,7 +354,194 @@ input {
 	text-underline-offset: 3px
 }
 
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
+#page-footer {
+	height: 120px;
+	margin-top: 7vh;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+#page-footer-content {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	margin-top: 2vh;
+	margin-bottom: 1vh;
+}
+
+#page-footer-content ul li {
+	display: inline-block;
+	font-size: 22px;
+	list-style-type: none;
+	margin-left: 30px; /* Ökar mellanrummet mellan varje individuell länk */
+}
+
+#page-footer-content .line-break {
+	  width: 100%;
+}
+
+.singlepost_container {
+	margin-inline: 60px;
+	margin-top: 50px;
+	background-color: #666666;
+	border-style: solid;
+	border-color: #ccccccff;
+	border-width: 4.634px;
+	border-radius: 20px;
+	padding: 70px;
+	padding-bottom: 170px;
+
+	display: flex;
+	/*justify-content: center;*/
+	width: 70%;
+	margin: auto; /* Centrerar rutorna */
+	margin-bottom: 25px; /* Skapar mellanrum mellan indivuella rutor */
+	margin-top: 70px; /* Skapar mellanrum mellan indivuella rutor */
+	flex-wrap: wrap-reverse;
+}
+
+.singlepost_container .text {
+	/*line-break: normal;*/
+	word-wrap: break-word;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.singlepost_container img {
+	height: 100%;
+	/*max-width: 100%;*/
+	max-width: 60%;
+	margin-right: 120px;
+}
+
+.singlepost_container .text h2 {
+	text-decoration: underline;
+	margin-bottom: 30px;
+	text-decoration-thickness: 4px;
+	text-decoration-color: #decd87;
+	text-underline-offset: 12px;
+	/*font-size: 200%;*/
+	color: white; /* Färgen står ut lite mer */
+}
+
+.description-header {
+	color: #decd87;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.post-description {
+	margin-top: 30px;
+	margin-bottom: -30px;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	font-style: italic;
+	max-width: 90%;
+	word-wrap: wrap;
+	overflow-x: hidden;
+}
+
+@media screen and (max-width: 790px) {
+	.singlepost_container img {max-width: 100%;}
+}
+
+@media screen and (max-width: 450px) {
+	.sidenav {padding-top: 15px;}
+	.sidenav a {font-size: 18px;}
+
+	.singlepost_container img {max-width: 120%;}
+	h1 {font-size: 35px;}
+
+	#topnav .logo {
+		margin-left: 10px;
+	}
+	.logotext {
+		font-size: 30px;
+		padding-left: 2px;
+	}
+
+	#topnav .user {
+		margin-right: 10px;
+		font-size: 19px;
+		padding-inline: 14px;
+	}
+
+	#topnav .user img {max-width: 90%;}
+
+	.post-box {
+		height: 488px;
+	}
+
+	.post-box .standard-image {
+		height: 310px;
+	}
+	.post-box .add-name {font-size: 28px;}
+
+	.post-box .add-image {
+		max-width: 80%;
+	}
+
+	input { font-size: 60%; }
+	body {font-size: 20px}
+	.form-container {width: 350px}
+}
+
+@media screen and (max-width: 400px) {
+	.post-box {
+		height: 428px;
+	}
+
+	.post-box .standard-image {
+		height: 250px;
+	}
+
+	.post-box .add-name {font-size: 24px;}
+
+	.post-box .add-image {
+		max-width: 80%;
+	}
+
+	.form-container {width: 320px}
+}
+
+@media screen and (max-width: 350px) {
+	.post-box .add-name {font-size: 18px;}
+
+	.post-box .add-image {
+		max-width: 65%;
+	}
+	h1 {font-size: 32px;}
+	
+	.form-container {width: 280px}
+	input { font-size: 47%; }
+}
+
+@media screen and (max-width: 300px) {
+	#topnav .user {margin-right: 0}
+	#topnav .logo {margin-left: 0}
+
+	.logotext {
+		font-size: 25px;
+		padding-left: 0;
+	}
+
+	.post-box {
+		height: 300px;
+	}
+
+	.post-box .standard-image {
+		height: 120px;
+	}
+
+	.post-box .add-name {font-size: 14px;}
+
+	.post-box .add-image {
+		max-width: 60%;
+	}
+
+	.form-container {width: 230px}
+	input { font-size: 40%; }
 }

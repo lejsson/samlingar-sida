@@ -27,11 +27,11 @@ class RegistrationForm(FlaskForm):
 class NewPostForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     description = StringField('Description (optional)')
-    image = FileField('General image for the post (optional)', [DataRequired()])
+    image = FileField('General image for the post', validators=[DataRequired()])
     submit = SubmitField('Add post')
 
-class NewPostConentForm(FlaskForm):
-    title = StringField('Title', validators=[DataRequired()])
+class NewPostContentForm(FlaskForm):
+    title = StringField('Title (optional)')
     description = StringField('Description (optional)')
-    image = FileField('Image for the post content', [DataRequired()])
+    image = FileField('Image for the post content', validators=[DataRequired()])
     submit = SubmitField('Add content')
