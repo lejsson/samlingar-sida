@@ -12,7 +12,7 @@ body {
 	font-size: 23px;
 	overflow-x: hidd5n; /* Strunta i att scrolla åt sidan */
 	background-color: #717171;
-	margin-bottom: 120px;
+	/*margin-bottom: 120px;*/
 }
 
 a {
@@ -20,7 +20,7 @@ a {
 	color: white
 }
 
-a:hover:not(.logo):not(.user):not(.submit) {
+a:hover:not(.logo):not(.user):not(.submit):not(.modal-button) {
 	transition: transform .2s;
 	color: #decd87;
 }
@@ -31,12 +31,13 @@ a:hover:not(.logo):not(.user):not(.submit) {
 	align-items: center;
 	height: 80px;
 	border-bottom: 5px solid #decd87;
-	overflow: hidden;
+	/*overflow-x: hidden;*/
 	width: 100%;
 	position: sticky;
 	top: 0;
-	z-index: 100; /* Gör så att element som blir påverkade av transform ej dyker upp ovanpå navbaren */
+	z-index: 2; /* Gör så att element som blir påverkade av transform ej dyker upp ovanpå navbaren */
 	/* #decd87 */ /*Gula färgen lolle*/
+	flex-wrap: wrap;
 }
 
 #topnav .menu {
@@ -48,6 +49,17 @@ a:hover:not(.logo):not(.user):not(.submit) {
 #topnav .menu:hover {
 	transition: transform .2s;
 	transform: scale(1.05); /* Resize */
+}
+
+#topnav ul {
+}
+
+#topnav ul li {
+	display: inline-block;
+	font-size: 22px;
+	list-style-type: none;
+	margin-left: 20px; /* Ökar mellanrummet mellan varje individuell länk */
+	font-weight: bold;
 }
 
 .sidenav {
@@ -86,7 +98,6 @@ a:hover:not(.logo):not(.user):not(.submit) {
 .logo {
 	display: flex;
 	/*text-decoration: none;*/
-	justify-content: center;
 	align-items: center;
 }
 
@@ -157,7 +168,7 @@ a:hover:not(.logo):not(.user):not(.submit) {
 	display: none;
 	position: absolute;
 	background-color: #666666;
-	min-width: 160px;
+	/*min-width: 160px;*/
 	border-style: solid;
 	border-color: #ccccccff;
 	border-width: 2.634px;
@@ -167,7 +178,7 @@ a:hover:not(.logo):not(.user):not(.submit) {
 	/*padding-bottom: 20px;*/
 	/*padding-top: 20px;*/
 	padding: 20px;
-	z-index: 200;
+	z-index: 3;
 	transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -181,6 +192,34 @@ a:hover:not(.logo):not(.user):not(.submit) {
 	border: none;
 	cursor: pointer;
 	/*font-size: 70%;*/
+	font-size: 20px;
+	color: black;
+}
+
+button {
+	background-color: #decd87;
+	padding-top: 6px;
+	padding-bottom: 6px;
+	padding-inline: 12px;
+	border-radius: 10px;
+	border: none;
+	cursor: pointer;
+	/*font-size: 70%;*/
+	font-size: 17px;
+	/*max-width: 150px;*/
+	white-space: pre;
+	text-align: center;
+	cursor: pointer;
+	outline: none;
+}
+
+.delete {
+	margin-top: 30px;
+	margin-bottom: -30px;
+	margin-left: auto;
+	margin-right: auto;
+	/*margin-right: 250px;*/
+	display: flex;
 	font-size: 20px;
 }
 
@@ -209,12 +248,6 @@ h1 {
 	margin-left: auto;
 	margin-right: auto;
 	color: white; /* Färgen står ut lite mer */
-}
-
-.center {
-	margin-left: auto;
-	margin-right: auto;
-	text-align: center;
 }
 
 .post-box-container {
@@ -355,12 +388,13 @@ input {
 }
 
 #page-footer {
-	height: 120px;
+	/*height: 120px;*/
 	margin-top: 7vh;
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	right: 0;
+	font-weight: bold;
+	/*position: fixed;*/
+	/*bottom: 0;*/
+	/*left: 0;*/
+	/*right: 0;*/
 }
 
 #page-footer-content {
@@ -368,7 +402,7 @@ input {
 	flex-wrap: wrap;
 	justify-content: center;
 	margin-top: 2vh;
-	margin-bottom: 1vh;
+	margin-bottom: 3vh;
 }
 
 #page-footer-content ul li {
@@ -430,6 +464,7 @@ input {
 	color: #decd87;
 	margin-top: 10px;
 	margin-bottom: 10px;
+	font-size: 29px;
 }
 
 .post-description {
@@ -444,15 +479,153 @@ input {
 	overflow-x: hidden;
 }
 
+#id01 {
+	display: none;
+}
+
+.modal-button {
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  opacity:0.9;
+}
+
+/* Float cancel and delete buttons and add an equal width */
+.cancelbtn, .deletebtn {
+  float: left;
+  width: 50%;
+}
+
+/* Add a color to the cancel button */
+.cancelbtn {
+  background-color: #ccc;
+  color: black;
+}
+
+/* Add a color to the delete button */
+.deletebtn {
+	background-color: #f44336;
+	padding-top: 6px;
+	padding-bottom: 6px;
+	padding-inline: 12px;
+	border-radius: 10px;
+	border: none;
+	cursor: pointer;
+	/*font-size: 70%;*/
+	font-size: 17px;
+	/*max-width: 150px;*/
+	white-space: pre;
+	text-align: center;
+	cursor: pointer;
+	outline: none;
+}
+
+/* Add padding and center-align text to the container */
+.container {
+  padding: 16px;
+  text-align: center;
+}
+
+/* The Modal (background) */
+.modal {
+  /*display: none; [> Hidden by default <]*/
+  position: fixed; /* Stay in place */
+  z-index: 4; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  /*background-color: #474e5d;*/
+  padding-top: 50px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #717171;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 4.634px solid #ccccccff;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* Style the horizontal ruler */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+.close:hover,
+.close:focus {
+  color: #f44336;
+  cursor: pointer;
+}
+
+/* Clear floats */
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.center { /* Kan inte centrera <a> utan att ha i en div med detta? */
+	margin-left: auto;
+	margin-right: auto;
+	/*margin-top: 300px;*/
+	/*margin: 0 auto;*/
+	text-align: center;
+	margin-top: 50px;
+}
+
+.goback {
+	/*text-decoration: underline;*/
+	/*text-decoration-thickness: 4px;*/
+	/*text-decoration-color: #decd87;*/
+	/*text-underline-offset: 12px;*/
+	font-weight: bold;
+	font-size: 27px;
+	/*margin-left: 0 auto;*/
+}
+
+.goback img {
+	color: white;
+	margin-top: 4px;
+	width: 25px;
+}
+
+.std-margin {
+	margin-top: 30px;
+	margin-right: 60px;
+	margin-left: 60px;
+}
+
+/* Change styles for cancel button and delete button on extra small screens */
+@media screen and (max-width: 300px) {
+  .cancelbtn, .deletebtn {
+    width: 100%;
+  }
+}
 @media screen and (max-width: 790px) {
 	.singlepost_container img {max-width: 100%;}
 }
 
 @media screen and (max-width: 450px) {
+	.std-margin {
+		margin-right: 30px;
+		margin-left: 30px;
+	}
+
 	.sidenav {padding-top: 15px;}
 	.sidenav a {font-size: 18px;}
 
-	.singlepost_container img {max-width: 120%;}
+	.singlepost_container img {max-width: auto;}
+
 	h1 {font-size: 35px;}
 
 	#topnav .logo {
@@ -505,6 +678,13 @@ input {
 	}
 
 	.form-container {width: 320px}
+
+	#topnav .user img {max-width: 20%;}
+
+	#topnav .user {
+		font-size: 17px;
+		padding-inline: 7px;
+	}
 }
 
 @media screen and (max-width: 350px) {
@@ -513,7 +693,7 @@ input {
 	.post-box .add-image {
 		max-width: 65%;
 	}
-	h1 {font-size: 32px;}
+	h1 {font-size: 30px;}
 	
 	.form-container {width: 280px}
 	input { font-size: 47%; }

@@ -5,7 +5,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" type="text/css" media="all">
 	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" sizes="any">
-	<!--<link rel="icon" href="{{ '/static/images/elements/logo.svg' }}" sizes="64x64">-->
         {% if title %}
         <title>{{ title }}</title>
 	{% else %}
@@ -13,6 +12,30 @@
         {% endif %}
 	
 	<!--<script>document.getElementById("user").addEventListener('mousedown', function(e){ e.preventDefault(); }, false);</script>-->
+
+	<script>
+	// Get the modal
+	var modal = document.getElementById('id01');
+	
+	// When the user clicks anywhere outside of the modal, close it
+	window.onclick = function(event) {
+	  if (event.target == modal) {
+	    modal.style.display = "none";
+	  }
+	}
+	</script>
+
+	<script> /* Open confirm modal */
+		function openModal() {
+			document.getElementById('id01').style.display='block'
+		}
+
+		document.addEventListener("keydown", event => { //Stäng sidenav om man trycker på escape
+			if (event.keyCode == 27) { //27 är keycode för escape
+				document.getElementById('id01').style.display='none'
+			}
+		});
+	</script>
 
 	<script> /* Sidenav */
 	        function openNav() {
@@ -97,6 +120,12 @@
 			</div>
 		</a>
 
+		<ul>
+			<!--<li><a href="{{ url_for('index') }}">Your collections</a></li>-->
+			<li><a href="{{ url_for('contact') }}">Contact</a></li>
+			<li><a href="{{ url_for('about') }}">About</a></li>
+		</ul>
+
 		{% if current_user.is_anonymous %}
 		<a href="{{ url_for('login') }}" class="user"> <!--Gör istället två stycken, en sign up och en sign in bredivd eller nåt-->
 			Sign in
@@ -116,37 +145,37 @@
 		{% endif %}
 	</div>
 	
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <ul>
-            {% for message in messages %}
-            <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-        {% endwith %}
+        <!--{% with messages = get_flashed_messages() %}-->
+        <!--{% if messages %}-->
+        <!--<ul>-->
+            <!--{% for message in messages %}-->
+            <!--<li>{{ message }}</li>-->
+            <!--{% endfor %}-->
+        <!--</ul>-->
+        <!--{% endif %}-->
+        <!--{% endwith %}-->
 
 	{% block content %}{% endblock %} <!--Innehållet börjar-->
 	<!--Gör en footare här lolllllllllllllllllllllllllllllll-->
 	<!--<div class="page-footer"></div>-->
-	<!--<footer id="page-footer">-->
-		<!--<hr>-->
-		<!--<div id="page-footer-content">-->
-			<!--<ul>-->
-				<!--<li><a href="{{ url_for('index') }}">Your collections</a></li>-->
-				<!--<li><a href="">Contact</a></li>-->
-				<!--<li><a href="">About</a></li>-->
-			<!--</ul>-->
+	<footer id="page-footer">
+		<hr>
+		<div id="page-footer-content">
+			<ul>
+				<li><a href="{{ url_for('index') }}">Your collections</a></li>
+				<li><a href="{{ url_for('contact') }}">Contact</a></li>
+				<li><a href="{{ url_for('about') }}">About</a></li>
+			</ul>
 		
-			<!--<div class="line-break"></div>-->
+			<div class="line-break"></div>
 		
-			<!--<a class="logo" href="{{ url_for('index') }}">-->
-				<!--<img src="{{ url_for('static', filename='images/elements/logo.svg') }}" alt="logo icon">-->
-				<!--<div class="logotext">-->
-					<!--Kerätä-->
-				<!--</div>-->
-			<!--</a>-->
-		<!--</div>-->
-	<!--</footer>-->
+			<a class="logo" href="{{ url_for('index') }}">
+				<img src="{{ url_for('static', filename='images/elements/logo.svg') }}" alt="logo icon">
+				<div class="logotext">
+					Kerätä
+				</div>
+			</a>
+		</div>
+	</footer>
 </body>
 </html>

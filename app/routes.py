@@ -1,4 +1,5 @@
 from flask import render_template, request, url_for, redirect, flash, send_from_directory
+from flask_sqlalchemy import extension
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, NewPostForm, NewPostContentForm
 from flask_login import current_user, login_user, login_required, logout_user
@@ -6,12 +7,21 @@ from app.models import User, Post, PostContent
 from werkzeug.urls import url_parse
 from werkzeug.utils import secure_filename
 import os.path, os
+import shutil #rm non-empty dirs
 
 #För att får items i post använd den och sen counta hur många de innehålla
 
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html', title='Contact')
+
+@app.route('/about')
+def about():
+    return render_template('about.html', title='About')
 
 @app.route('/')
 @app.route('/index')
@@ -41,14 +51,15 @@ def post_content():
 @login_required
 def singlepost():
     current_postcontent_id = int(request.args.get("current_postcontent_id"))
-    current_post_title = request.args.get("current_post_title")
+    current_postcontent = PostContent.query.all()[current_postcontent_id - 1]
+    current_post_id = int(request.args.get("current_post_id"))
+    current_post = Post.query.all()[current_post_id - 1]
+    postcontents = current_user.postcontents.all()
 
-    postcontents = PostContent.query.all()
-    current_postcontent = postcontents[current_postcontent_id - 1]
     user_data_dir = "/static/user_data/" + current_user.username
     timestamp = current_postcontent.timestamp.date()
 
-    return render_template('singlepost.html', current_post_title=current_post_title, postcontents=postcontents, current_postcontent=current_postcontent, file_dir=user_data_dir, timestamp=timestamp, title=current_postcontent.title)
+    return render_template('singlepost.html', current_post=current_post, postcontents=postcontents, current_postcontent=current_postcontent, file_dir=user_data_dir, timestamp=timestamp, title=current_postcontent.title)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -92,7 +103,7 @@ def register():
         return redirect(url_for('login'))
     return render_template('register.html', title='Sign up', form=form)
 
-ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'avif', 'webp', 'svg', 'tiff', 'tif'}
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -103,6 +114,7 @@ def addpost():
     form = NewPostForm()
     if form.validate_on_submit():
         image = form.image.data
+        extension = os.path.splitext(image.filename)[1]
         dir = os.path.join(app.root_path, 'static') +  '/user_data/' + current_user.username + '/' + form.title.data
 
         if allowed_file(image.filename):
@@ -119,7 +131,8 @@ def addpost():
         _list = list(generated_name)
         generated_name = ""
         for i in range(len(_list) - 1):
-            generated_name = generated_name + _list[i]
+            generated_name += _list[i]
+        generated_name += extension
         generated_name = secure_filename(generated_name)
         os.rename(os.path.join(UPLOAD_FOLDER, image_filename), os.path.join(UPLOAD_FOLDER, generated_name))
 
@@ -138,6 +151,7 @@ def addpostcontent():
 
     if form.validate_on_submit():
         image = form.image.data
+        extension = os.path.splitext(image.filename)[1]
 
         if allowed_file(image.filename):
             UPLOAD_FOLDER = os.path.join(app.root_path, 'static') +  '/user_data/' + current_user.username + '/' + current_post.title
@@ -152,7 +166,8 @@ def addpostcontent():
         _list = list(generated_name)
         generated_name = ""
         for i in range(len(_list) - 1):
-            generated_name = generated_name + _list[i]
+            generated_name += _list[i]
+        generated_name += extension
         generated_name = secure_filename(generated_name)
         os.rename(os.path.join(UPLOAD_FOLDER, image_filename), os.path.join(UPLOAD_FOLDER, generated_name))
 
@@ -161,3 +176,44 @@ def addpostcontent():
         db.session.commit()
         return redirect('index')
     return render_template('addpostcontent.html', title='Add to collection', form=form)
+
+@app.route('/removecollection', methods=['GET'])
+@login_required
+def removecollection():
+    #get vars
+    current_post_id = int(request.args.get("current_post_id"))
+    current_post = Post.query.all()[current_post_id - 1]
+    current_post_data_dir = "static/user_data/" + current_user.username + '/' + current_post.title
+
+    #rm collection data dir och allt det innehåller
+    shutil.rmtree(os.path.join(app.root_path, current_post_data_dir))
+
+    #remove every post in collection
+    current_postcontents = PostContent.query.all()
+    for item in current_postcontents:
+        if item.parent == current_post.id:
+            db.session.delete(item)
+
+    #remove collection from database
+    db.session.delete(current_post)
+    db.session.commit()
+    return redirect('index')
+
+@app.route('/removepostcontent', methods=['GET'])
+@login_required
+def removepostcontent():
+    #get vars
+    current_postcontent_id = int(request.args.get("current_postcontent_id"))
+    current_postcontent = PostContent.query.all()[current_postcontent_id - 1]
+    current_post_id = int(request.args.get("current_post_id"))
+    current_post = Post.query.all()[current_post_id - 1]
+
+    #delete image related to post
+    current_postcontent_image_path = "static/user_data/" + current_user.username + '/' + current_post.title + '/' + current_postcontent.image
+    #shutil.rmtree(os.path.join(app.root_path, current_postcontent_image_path))
+    os.remove(os.path.join(app.root_path, current_postcontent_image_path))
+
+    #remove post
+    db.session.delete(current_postcontent)
+    db.session.commit()
+    return redirect('index')
