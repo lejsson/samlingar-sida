@@ -98,84 +98,92 @@
 	</script>
 </head>
 <body>
-	<div id="topnav">
-		<div id="mySidenav" class="sidenav">
-			<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-			<a href="{{ url_for('index') }}">Home</a>
-			<a href="#">About</a>
-			<a href="#">Contact</a>
-			<!--<a href="#">Services</a>-->
-			<!--<a href="#">Clients</a>-->
-		</div>
-
-		<!--<div onclick="openNav()">-->
-			<!--<img class="menu" src="{{ url_for('static', filename='images/elements/bars.svg') }}" alt="menu">-->
-		<!--</div>-->
-
-		<a class="logo" href="{{ url_for('index') }}">
-			<img src="{{ url_for('static', filename='images/elements/logo.svg') }}" alt="logo icon">
-
-			<div class="logotext">
-				Kerätä
-			</div>
-		</a>
-
-		<ul>
-			<!--<li><a href="{{ url_for('index') }}">Your collections</a></li>-->
-			<li><a href="{{ url_for('contact') }}">Contact</a></li>
-			<li><a href="{{ url_for('about') }}">About</a></li>
-		</ul>
-
-		{% if current_user.is_anonymous %}
-		<a href="{{ url_for('login') }}" class="user"> <!--Gör istället två stycken, en sign up och en sign in bredivd eller nåt-->
-			Sign in
-		</a>
-		{% else %}
-		<span onclick="toggleDropdown()" class="dropdown">
-			<div id="user" class="user">
-				<img src="{{ url_for('static', filename='images/elements/user.svg') }}" style="padding-right: 5px" alt="user" width="25">
-				{{ current_user.username }}
-				<img src="{{ url_for('static', filename='images/elements/arrow.svg') }}" id="arrow" alt="down arrow" width="28">
-			</div>
-	  		<div onclick="closeDropdown()" id="user-dropdown" class="dropdown-content">
-				<a href="{{ url_for('index') }}">Your colletions</a>
-				<a class="submit" href="{{ url_for('logout') }}">Sign out</a> <br>
-			</div>
-		</span>
-		{% endif %}
-	</div>
-	
-        <!--{% with messages = get_flashed_messages() %}-->
-        <!--{% if messages %}-->
-        <!--<ul>-->
-            <!--{% for message in messages %}-->
-            <!--<li>{{ message }}</li>-->
-            <!--{% endfor %}-->
-        <!--</ul>-->
-        <!--{% endif %}-->
-        <!--{% endwith %}-->
-
-	{% block content %}{% endblock %} <!--Innehållet börjar-->
-	<!--Gör en footare här lolllllllllllllllllllllllllllllll-->
-	<!--<div class="page-footer"></div>-->
-	<footer id="page-footer">
-		<hr>
-		<div id="page-footer-content">
-			<ul>
-				<li><a href="{{ url_for('index') }}">Your collections</a></li>
-				<li><a href="{{ url_for('contact') }}">Contact</a></li>
-				<li><a href="{{ url_for('about') }}">About</a></li>
-			</ul>
-		
-			<div class="line-break"></div>
-		
-			<a class="logo" href="{{ url_for('index') }}">
-				<img src="{{ url_for('static', filename='images/elements/logo.svg') }}" alt="logo icon">
-				<div class="logotext">
-					Kerätä
+	<div id="page-container">
+		<div id="content-wrap">
+			<nav id="topnav">
+				<div id="mySidenav" class="sidenav">
+					<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+					<a href="{{ url_for('index') }}">Home</a>
+					<a href="#">About</a>
+					<a href="#">Contact</a>
+					<!--<a href="#">Services</a>-->
+					<!--<a href="#">Clients</a>-->
 				</div>
-			</a>
-		</div>
-	</footer>
+
+				<!--<div onclick="openNav()">-->
+					<!--<img class="menu" src="{{ url_for('static', filename='images/elements/bars.svg') }}" alt="menu">-->
+				<!--</div>-->
+
+				<a class="logo" href="{{ url_for('index') }}">
+					<img src="{{ url_for('static', filename='images/elements/logo.svg') }}" alt="logo icon">
+
+					<div class="logotext">
+						Kerätä
+					</div>
+				</a>
+
+				<ul>
+					<!--<li><a href="{{ url_for('index') }}">Your collections</a></li>-->
+					<li><a href="{{ url_for('contact') }}">Contact</a></li>
+					<li><a href="{{ url_for('about') }}">About</a></li>
+				</ul>
+
+				{% if current_user.is_anonymous %}
+				<a href="{{ url_for('login') }}" class="user"> <!--Gör istället två stycken, en sign up och en sign in bredivd eller nåt-->
+					Sign in
+				</a>
+				{% else %}
+				<span onclick="toggleDropdown()" class="dropdown">
+					<div id="user" class="user">
+						<img src="{{ url_for('static', filename='images/elements/user.svg') }}" style="padding-right: 5px" alt="user" width="25">
+						{{ current_user.username }}
+						<img src="{{ url_for('static', filename='images/elements/arrow.svg') }}" id="arrow" alt="down arrow" width="28">
+					</div>
+			  		<div onclick="closeDropdown()" id="user-dropdown" class="dropdown-content">
+						<a href="{{ url_for('index') }}">Your colletions</a>
+						<div style="padding-top: 10px;"></div>
+						<a class="submit" href="{{ url_for('logout') }}">Sign out</a> <br>
+					</div>
+				</span>
+				{% endif %}
+			</nav>
+			
+			{% block content %}{% endblock %} <!--Innehållet börjar-->
+
+			<div class="messages"> <!--Error messages-->
+				{% with messages = get_flashed_messages() %}
+				{% if messages %}
+				<ul>
+				    {% for message in messages %}
+				    <li>{{ message }}</li>
+				    {% endfor %}
+				</ul>
+				{% endif %}
+				{% endwith %}
+			</div>
+
+			</div>
+		<footer id="page-footer">
+			<hr>
+			<div id="page-footer-content">
+				<ul>
+					{% if current_user.is_active %}
+						<li><a href="{{ url_for('index') }}">Your collections</a></li>
+					{% endif %}
+					<li><a href="{{ url_for('contact') }}">Contact</a></li>
+					<li><a href="{{ url_for('about') }}">About</a></li>
+				</ul>
+			
+				<div class="line-break"></div>
+			
+				<a class="logo" href="{{ url_for('index') }}">
+					<img src="{{ url_for('static', filename='images/elements/logo.svg') }}" alt="logo icon">
+					<div class="logotext">
+						Kerätä
+					</div>
+				</a>
+			</div>
+		</footer>
+	</div>
 </body>
 </html>

@@ -27,7 +27,7 @@ class User(UserMixin, db.Model):
 
 class Post(db.Model): #Göra lista med alla posts i denna för detta ska vara en post som innehåller posts
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(64))
+    title = db.Column(db.String(64), index=True, unique=True)
     description = db.Column(db.String(140))
     # body = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)

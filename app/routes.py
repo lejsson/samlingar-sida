@@ -1,5 +1,6 @@
 from flask import render_template, request, url_for, redirect, flash, send_from_directory
 from flask_sqlalchemy import extension
+from sqlalchemy import Boolean
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, NewPostForm, NewPostContentForm
 from flask_login import current_user, login_user, login_required, logout_user
@@ -28,9 +29,12 @@ def about():
 @login_required
 def index():
     posts = current_user.posts.all()
+    if len(posts) == 0: #Om ej har några samlingar
+        zero_posts = True
+        return render_template('index.html', title='Your collections', zero_posts=zero_posts)
     postcontents = current_user.postcontents.all()
     user_data_dir = "/static/user_data/" + current_user.username
-    return render_template('index.html', title='Home', posts=posts, postcontents=postcontents, file_dir=user_data_dir)
+    return render_template('index.html', title='Your collections', posts=posts, postcontents=postcontents, file_dir=user_data_dir)
 
 # @app.route('/post_content/<current_user>', methods=['GET', 'POST'])
 @app.route('/post_content', methods=['GET', 'POST'])
@@ -38,9 +42,7 @@ def index():
 # def post_content(current_user):
 def post_content():
     current_post_id = int(request.args.get("current_post_id"))
-    posts = Post.query.all()
-    current_post = posts[current_post_id - 1]
-    # current_post = posts[posts.index(current_post)]
+    current_post = Post.query.get(current_post_id)
     postcontents = current_user.postcontents.all()
     user_data_dir = "/static/user_data/" + current_user.username
     return render_template('post_content.html', postcontents=postcontents, current_post=current_post, file_dir=user_data_dir, title=current_post.title)
@@ -51,9 +53,9 @@ def post_content():
 @login_required
 def singlepost():
     current_postcontent_id = int(request.args.get("current_postcontent_id"))
-    current_postcontent = PostContent.query.all()[current_postcontent_id - 1]
+    current_postcontent = PostContent.query.get(current_postcontent_id)
     current_post_id = int(request.args.get("current_post_id"))
-    current_post = Post.query.all()[current_post_id - 1]
+    current_post = Post.query.get(current_post_id)
     postcontents = current_user.postcontents.all()
 
     user_data_dir = "/static/user_data/" + current_user.username
@@ -115,17 +117,23 @@ def addpost():
     if form.validate_on_submit():
         image = form.image.data
         extension = os.path.splitext(image.filename)[1]
-        dir = os.path.join(app.root_path, 'static') +  '/user_data/' + current_user.username + '/' + form.title.data
+        # user_data_dir = os.path.join(app.root_path, 'static') +  '/user_data/' + current_user.username
+        # if not os.path.exists(user_data_dir):
+            # os.mkdir(user_data_dir)
 
+        collection_dir = os.path.join(app.root_path, 'static') +  '/user_data/' + current_user.username + '/' + form.title.data
         if allowed_file(image.filename):
-            if not os.path.exists(dir):
-                os.mkdir(dir)
-            UPLOAD_FOLDER = dir
+            if not os.path.exists(collection_dir):
+                os.makedirs(collection_dir) #Om inte användarens data dir finns eller om inte diren till collection titeln finns
+            else:
+                flash("A collection with that title already exists. Please choose a different title.")
+                return render_template('addpost.html', title='Add new collection', form=form)
+            UPLOAD_FOLDER = collection_dir
             image_filename = secure_filename(image.filename)
             image.save(os.path.join(UPLOAD_FOLDER, image_filename))
         else: 
             flash("Filetype not allowed")
-            return render_template('addpost.html', title='Add new post', form=form)
+            return render_template('addpost.html', title='Add new collection', form=form)
 
         generated_name = os.popen('python3 app/scripts/randomstring.py 30').read()
         _list = list(generated_name)
@@ -147,7 +155,7 @@ def addpost():
 def addpostcontent():
     form = NewPostContentForm()
     current_post_id = int(request.args.get("current_post_id"))
-    current_post = Post.query.all()[current_post_id - 1]
+    current_post = Post.query.get(current_post_id)
 
     if form.validate_on_submit():
         image = form.image.data
@@ -182,7 +190,7 @@ def addpostcontent():
 def removecollection():
     #get vars
     current_post_id = int(request.args.get("current_post_id"))
-    current_post = Post.query.all()[current_post_id - 1]
+    current_post = Post.query.get(current_post_id)
     current_post_data_dir = "static/user_data/" + current_user.username + '/' + current_post.title
 
     #rm collection data dir och allt det innehåller
@@ -204,9 +212,9 @@ def removecollection():
 def removepostcontent():
     #get vars
     current_postcontent_id = int(request.args.get("current_postcontent_id"))
-    current_postcontent = PostContent.query.all()[current_postcontent_id - 1]
+    current_postcontent = PostContent.query.get(current_postcontent_id)
     current_post_id = int(request.args.get("current_post_id"))
-    current_post = Post.query.all()[current_post_id - 1]
+    current_post = Post.query.get(current_post_id)
 
     #delete image related to post
     current_postcontent_image_path = "static/user_data/" + current_user.username + '/' + current_post.title + '/' + current_postcontent.image

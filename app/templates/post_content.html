@@ -23,7 +23,7 @@
 		<p class="post-description">{{ current_post.description }}</p>
 	{% endif %}
 	<br>
-	<button class="delete" onclick="openModal()">Delete this collection</button>
+	<button class="delete" onclick="openModal()">Remove this collection</button>
 	
 	<div class="post-box-container">
 		<a href="{{ url_for('addpostcontent', current_post_id=current_post.id) }}" class="post-box">

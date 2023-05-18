@@ -15,7 +15,7 @@ else:
     
 #pass_len = int(input("How long password gonna be yes? "))
 if pass_len > 1000000:
-    exit("Are you sure you need such a long passswordare?")
+    exit("Are you sure you need such a long string?")
 choice = random.randint(0, 1)
 if choice:
     digits_amount = pass_len // 2

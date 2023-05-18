@@ -27,7 +27,7 @@ class RegistrationForm(FlaskForm):
 class NewPostForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     description = StringField('Description (optional)')
-    image = FileField('General image for the post', validators=[DataRequired()])
+    image = FileField('General image for the collection', validators=[DataRequired()])
     submit = SubmitField('Add post')
 
 class NewPostContentForm(FlaskForm):
