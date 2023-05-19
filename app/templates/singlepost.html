@@ -18,9 +18,18 @@
 	</div>
 
 	{% set image_path = file_dir + '/' + current_post.title + '/' + current_postcontent.image %}
-	<div class="center">
-		<a class="goback" href="">Go back to collection</a>
+	<div class="collection-actions-container">
+		<a href="{{ url_for('index') }}">Return to collections</a>
+		<a href="{{ url_for('post_content', current_post_id=current_post.id) }}">
+			Return to collection "{{ current_post.title }}"
+		</a>
+		<a href="{{ url_for('editpostcontent', current_post_id=current_post.id, current_postcontent_id=current_postcontent.id) }}">
+			Edit this post
+		</a>
 	</div>
+
+	<div style="margin-bottom: 50px;"></div>
+
 	<button class="delete" onclick="openModal()">Remove this post</button>
 	<div class="singlepost_container">
 		<img src="{{ image_path }}" alt="{{ current_postcontent.image }}">

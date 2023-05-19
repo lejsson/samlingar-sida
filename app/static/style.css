@@ -215,7 +215,6 @@ button {
 	/*font-size: 70%;*/
 	font-size: 17px;
 	/*max-width: 150px;*/
-	white-space: pre;
 	text-align: center;
 	cursor: pointer;
 	outline: none;
@@ -514,10 +513,17 @@ button:hover {
   opacity:0.9;
 }
 
+.deletebtn:hover {
+	opacity: 0.9;
+}
+
 /* Float cancel and delete buttons and add an equal width */
 .cancelbtn, .deletebtn {
-  float: left;
-  width: 50%;
+	max-width: 50%;	
+	display: flex;
+	justify-content: center;
+	padding-inline: 15px;
+
 }
 
 /* Add a color to the cancel button */
@@ -529,19 +535,16 @@ button:hover {
 /* Add a color to the delete button */
 .deletebtn {
 	background-color: #f44336;
-	padding-top: 6px;
-	padding-bottom: 6px;
-	padding-inline: 12px;
 	border-radius: 10px;
 	border: none;
 	cursor: pointer;
 	/*font-size: 70%;*/
 	font-size: 17px;
 	/*max-width: 150px;*/
-	white-space: pre;
 	text-align: center;
 	cursor: pointer;
 	outline: none;
+  	color: black;
 }
 
 /* Add padding and center-align text to the container */
@@ -566,10 +569,10 @@ button:hover {
 
 /* Modal Content/Box */
 .modal-content {
-  background-color: #717171;
-  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
-  border: 4.634px solid #ccccccff;
-  width: 80%; /* Could be more or less, depending on screen size */
+	background-color: #717171;
+	margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+	border: 4.634px solid #ccccccff;
+	width: 60%; /* Could be more or less, depending on screen size */
 }
 
 /* Style the horizontal ruler */
@@ -586,9 +589,11 @@ hr {
 
 /* Clear floats */
 .clearfix::after {
-  content: "";
-  clear: both;
-  display: table;
+	content: "";
+	clear: both;
+	display: table;
+	margin-left: auto;
+  	margin-right: auto
 }
 
 .center { /* Kan inte centrera <a> utan att ha i en div med detta? */
@@ -597,23 +602,7 @@ hr {
 	/*margin-top: 300px;*/
 	/*margin: 0 auto;*/
 	text-align: center;
-	margin-top: 50px;
-}
-
-.goback {
-	/*text-decoration: underline;*/
-	/*text-decoration-thickness: 4px;*/
-	/*text-decoration-color: #decd87;*/
-	/*text-underline-offset: 12px;*/
-	font-weight: bold;
-	font-size: 27px;
-	/*margin-left: 0 auto;*/
-}
-
-.goback img {
-	color: white;
-	margin-top: 4px;
-	width: 25px;
+	margin-top: 40px;
 }
 
 .std-margin {
@@ -637,6 +626,23 @@ hr {
 
 .messages ul li {
 	list-style-type: none;
+}
+
+.collection-actions-container {
+	margin-top: ;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	text-align: center;
+	margin-top: 40px;
+	margin-bottom: -30px;
+	text-decoration: underline;
+}
+
+.collection-actions-container a {
+	margin-inline: 15px;
+	font-weight: bold;
+	margin-bottom: 10px;
 }
 
 /* Change styles for cancel button and delete button on extra small screens */

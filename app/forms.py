@@ -1,9 +1,9 @@
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileField
+from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import ValidationError, DataRequired, EqualTo
 from app.models import User
-from PIL import Image
+# from PIL import Image
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
@@ -28,10 +28,22 @@ class NewPostForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     description = StringField('Description (optional)')
     image = FileField('General image for the collection', validators=[DataRequired()])
-    submit = SubmitField('Add post')
+    submit = SubmitField('Add collection')
 
 class NewPostContentForm(FlaskForm):
     title = StringField('Title (optional)')
     description = StringField('Description (optional)')
-    image = FileField('Image for the post content', validators=[DataRequired()])
+    image = FileField('Image for the post', validators=[DataRequired()])
     submit = SubmitField('Add content')
+
+class EditPostForm(FlaskForm):
+    new_title = StringField('New title', validators=[DataRequired()])
+    new_desc = StringField('Updated Description (optional)')
+    new_image = FileField('New general image for the collection', validators=[DataRequired()])
+    submit = SubmitField('Edit collection')
+
+class EditPostContentForm(FlaskForm):
+    new_title = StringField('New title (optional)')
+    new_desc = StringField('New Description (optional)')
+    new_image = FileField('New image for the post', validators=[DataRequired()])
+    submit = SubmitField('Edit collection')

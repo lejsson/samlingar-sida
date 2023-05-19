@@ -12,12 +12,17 @@
 				<br>
 				<div class="clearfix">
 					<button onclick="document.getElementById('id01').style.display='none'" type="button" class="modal-button cancelbtn">Cancel</button>
-					<a href="{{ url_for('removecollection', current_post_id=current_post.id) }}" class="modal-button deletebtn">Confirm</a>
+					<a class="modal-button deletebtn" href="{{ url_for('removecollection', current_post_id=current_post.id) }}">Confirm</a>
 		      		</div>
 		    	</div>
 		</div>
 	</div>
 	
+	<div class="collection-actions-container">
+		<a href="{{ url_for('index') }}">Return to collections</a>
+		<!--<div style="margin-top: 10px;"></div>-->
+		<a href="{{ url_for('editpost', current_post_id=current_post.id) }}">Edit this collection</a>
+	</div>
 	<h1>{{ current_post.title }}</h1>
 	{% if current_post.description %}
 		<p class="post-description">{{ current_post.description }}</p>
