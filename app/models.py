@@ -27,8 +27,8 @@ class User(UserMixin, db.Model):
 
 class Post(db.Model): #Göra lista med alla posts i denna för detta ska vara en post som innehåller posts
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(64), index=True, unique=True)
-    description = db.Column(db.String(140))
+    title = db.Column(db.String(32), index=True, unique=True)
+    description = db.Column(db.String(100))
     # body = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -41,8 +41,8 @@ class Post(db.Model): #Göra lista med alla posts i denna för detta ska vara en
 class PostContent(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     parent = db.Column(db.Integer) #Vilken som lol är parent posten till denna. Ska automatiskt bli denna, ska inte behöva manuellt. När går in på en post så kommer det vara en såhär add to collections, och då det blir form för att lägga till saker mitt namn är jeff. Då kommer automatiskt den post man är storas som parent lolllllllllllllllllllllllllllllllllllllllll.
-    title = db.Column(db.String(64))
-    description = db.Column(db.String(140))
+    title = db.Column(db.String(32))
+    description = db.Column(db.String(100))
     # body = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow) #ksk inte ska ha timestamp på vanlig post, bara på denna lol
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))

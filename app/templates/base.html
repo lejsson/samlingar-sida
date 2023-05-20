@@ -25,6 +25,19 @@
 	}
 	</script>
 
+	<script>
+	// Get the modal
+	
+	var dropdown = document.getElementById('user-dropdown');
+	// When the user clicks anywhere outside of the modal, close it
+	window.onclick = function(event) {
+	if (event.target == dropdown) {
+	    	dropdown.style.display = "none";
+		//closeDropdown()
+	  }
+	}
+	</script>
+
 	<script> /* Open confirm modal */
 		function openModal() {
 			document.getElementById('id01').style.display='block'
@@ -37,33 +50,10 @@
 		});
 	</script>
 
-	<script> /* Sidenav */
-	        function openNav() {
-			if (document.getElementById("user-dropdown").style.getPropertyValue('style') != "none") {
-				closeDropdown()
-			}
-
-	        	document.getElementById("mySidenav").style.width = "250px";
-			document.addEventListener("keydown", event => { //Stäng sidenav om man trycker på escape
-				if (event.keyCode == 27) { //27 är keycode för escape
-					closeNav();
-				}
-			});
-	        }
-	              
-	        function closeNav() {
-	        	document.getElementById("mySidenav").style.width = "0";
-	        }
-	</script>
-
 	<script> /* User dropdown */
 		/* TODO: ändra rotation på arrow 180 grader när man togglar */
 	        function openDropdown() {
 			console.log("Opening user dropdown")
-			if (document.getElementById("mySidenav").style.getPropertyValue('width') != "0") {
-				closeNav()
-			}
-
 	        	document.getElementById("arrow").style.transform = "rotate(180deg) scaleX(-1)";
 
 	        	document.getElementById("user-dropdown").style.display = "block";
@@ -72,13 +62,6 @@
 					closeDropdown();
 				}
 			});
-			/* document.addEventListener("mousedown", event => { //Stäng sidenav om man trycker på escape
-				//if (!event.target.classList.contains('dropdown-content')) {
-				if (!event.target.matches('dropdown-content')) {
-				        // your code
-				    }
-				closeDropdown();
-			}); */
 	        }
 	              
 	        function closeDropdown() {
@@ -101,19 +84,6 @@
 	<div id="page-container">
 		<div id="content-wrap">
 			<nav id="topnav">
-				<div id="mySidenav" class="sidenav">
-					<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-					<a href="{{ url_for('index') }}">Home</a>
-					<a href="#">About</a>
-					<a href="#">Contact</a>
-					<!--<a href="#">Services</a>-->
-					<!--<a href="#">Clients</a>-->
-				</div>
-
-				<!--<div onclick="openNav()">-->
-					<!--<img class="menu" src="{{ url_for('static', filename='images/elements/bars.svg') }}" alt="menu">-->
-				<!--</div>-->
-
 				<a class="logo" href="{{ url_for('index') }}">
 					<img src="{{ url_for('static', filename='images/elements/logo.svg') }}" alt="logo icon">
 
@@ -142,7 +112,7 @@
 			  		<div onclick="closeDropdown()" id="user-dropdown" class="dropdown-content">
 						<a href="{{ url_for('index') }}">Your colletions</a>
 						<div style="padding-top: 10px;"></div>
-						<a class="submit" href="{{ url_for('logout') }}">Sign out</a> <br>
+						<a class="dropdown-button" href="{{ url_for('logout') }}">Sign out</a> <br>
 					</div>
 				</span>
 				{% endif %}

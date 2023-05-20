@@ -1,4 +1,4 @@
-from flask import render_template, request, url_for, redirect, flash, send_from_directory
+from flask import render_template, request, url_for, redirect, flash, send_from_directory, g
 from flask_sqlalchemy import extension
 from flask_wtf.file import FileField
 from sqlalchemy import Boolean
@@ -8,9 +8,9 @@ from flask_login import current_user, login_user, login_required, logout_user
 from app.models import User, Post, PostContent 
 from werkzeug.urls import url_parse
 from werkzeug.utils import secure_filename
-from PIL import Image
 import os.path, os
 import shutil #rm non-empty dirs
+from functools import wraps
 
 @app.route('/favicon.ico')
 def favicon():
@@ -59,6 +59,14 @@ def singlepost():
 
     return render_template('singlepost.html', current_post=current_post, postcontents=postcontents, current_postcontent=current_postcontent, file_dir=user_data_dir, timestamp=timestamp, title=current_postcontent.title)
 
+# def login_required(f):
+    # @wraps(f)
+    # def decorated_function(*args, **kwargs):
+        # if session.get('username') is None or session.get('if_logged') is None:
+            # return redirect('/login')
+        # return f(*args, **kwargs)
+    # return decorated_function
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -79,7 +87,7 @@ def login():
 @app.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('login'))
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -104,6 +112,7 @@ def allowed_file(filename):
 @login_required
 def addpost():
     form = NewPostForm()
+
     if form.validate_on_submit():
         image = form.image.data
         extension = os.path.splitext(image.filename)[1]
@@ -154,7 +163,7 @@ def addpostcontent():
             image.save(os.path.join(UPLOAD_FOLDER, image_filename))
         else: 
             flash("Filetype not allowed")
-            return render_template('addpostcontent.html', title='Add new post', form=form)
+            return render_template('addpostcontent.html', title='Add new post', form=form, current_post=current_post)
 
         generated_name = os.popen('python3 app/scripts/randomstring.py 30').read()
         _list = list(generated_name)
@@ -170,7 +179,7 @@ def addpostcontent():
         db.session.commit()
         return redirect(url_for('post_content', current_post_id=current_post_id))
         # return redirect(url_for('index'))
-    return render_template('addpostcontent.html', title='Add to collection', form=form)
+    return render_template('addpostcontent.html', title='Add new post', form=form, current_post=current_post)
 
 @app.route('/removecollection', methods=['GET'])
 @login_required
@@ -221,59 +230,72 @@ def editpost():
     current_post = Post.query.get(current_post_id)
 
     if form.validate_on_submit():
-        image = form.new_image.data
-        extension = os.path.splitext(image.filename)[1]
-
-        collection_dir = os.path.join(app.root_path, 'static') +  '/user_data/' + current_user.username + '/' + form.new_title.data
-        if allowed_file(image.filename):
-            if not os.path.exists(collection_dir):
-                os.makedirs(collection_dir) #Om inte användarens data dir finns eller om inte diren till collection titeln finns
-            elif form.new_title.data == current_post.title:
-                pass
-            else:
-                flash("A collection with that title already exists. Please choose a different title.")
-                return render_template('editpost.html', title='Edit collection', form=form)
-            UPLOAD_FOLDER = collection_dir
-            image_filename = secure_filename(image.filename)
-            image.save(os.path.join(UPLOAD_FOLDER, image_filename))
-        else: 
-            flash("Filetype not allowed.")
-            return render_template('editpost.html', title='Edit collection', form=form)
-
-        generated_name = os.popen('python3 app/scripts/randomstring.py 30').read()
-        _list = list(generated_name)
-        generated_name = ""
-        for i in range(len(_list) - 1):
-            generated_name += _list[i]
-        generated_name += extension
-        generated_name = secure_filename(generated_name)
-        os.rename(os.path.join(UPLOAD_FOLDER, image_filename), os.path.join(UPLOAD_FOLDER, generated_name))
-
-        if form.new_title.data == current_post.title:
-            os.remove(os.path.join(collection_dir, current_post.image))
+        if form.new_title.data == current_post.title and form.new_image.data is None: #Måste hantera ifall bytt namn
+            current_post.title = form.new_title.data
+            current_post.description = form.new_desc.data
+            db.session.commit()
+            return redirect(url_for('post_content', current_post_id=current_post_id))
+        elif form.new_title.data != current_post.title and form.new_image.data is None: #Måste hantera ifall bytt namn
+            #rename collection data dir
+            collection_dir = os.path.join(app.root_path, 'static') +  '/user_data/' + current_user.username + '/' + current_post.title
+            new_dir = os.path.join(app.root_path, 'static') +  '/user_data/' + current_user.username + '/' + form.new_title.data
+            os.rename(collection_dir, new_dir)
+            current_post.title = form.new_title.data
+            current_post.description = form.new_desc.data
+            db.session.commit()
+            return redirect(url_for('post_content', current_post_id=current_post_id))
         else:
-            #move contents of old dir
-            old_dir = os.path.join(app.root_path, 'static') +  '/user_data/' + current_user.username + '/' + current_post.title
-            os.remove(os.path.join(old_dir, current_post.image))
-            files = os.listdir(old_dir)
-            if len(files) != 0: #if not empty
-                for file in files:
-                    shutil.move(os.path.join(old_dir, file), collection_dir)
-            shutil.rmtree(old_dir)
+            image = form.new_image.data
+            extension = os.path.splitext(image.filename)[1]
+
+            collection_dir = os.path.join(app.root_path, 'static') +  '/user_data/' + current_user.username + '/' + form.new_title.data
+            if allowed_file(image.filename):
+                if not os.path.exists(collection_dir):
+                    os.makedirs(collection_dir) #Om inte användarens data dir finns eller om inte diren till collection titeln finns
+                elif form.new_title.data == current_post.title:
+                    pass
+                else:
+                    flash("A collection with that title already exists. Please choose a different title.")
+                    return render_template('editpost.html', title='Edit collection', form=form, current_post=current_post)
+                UPLOAD_FOLDER = collection_dir
+                image_filename = secure_filename(image.filename)
+                image.save(os.path.join(UPLOAD_FOLDER, image_filename))
+            else: 
+                flash("Filetype not allowed.")
+                return render_template('editpost.html', title='Edit collection', form=form, current_post=current_post)
+
+            generated_name = os.popen('python3 app/scripts/randomstring.py 30').read()
+            _list = list(generated_name)
+            generated_name = ""
+            for i in range(len(_list) - 1):
+                generated_name += _list[i]
+            generated_name += extension
+            generated_name = secure_filename(generated_name)
+            os.rename(os.path.join(UPLOAD_FOLDER, image_filename), os.path.join(UPLOAD_FOLDER, generated_name))
+
+            if form.new_title.data == current_post.title:
+                os.remove(os.path.join(collection_dir, current_post.image))
+            else:
+                #move contents of old dir
+                old_dir = os.path.join(app.root_path, 'static') +  '/user_data/' + current_user.username + '/' + current_post.title
+                os.remove(os.path.join(old_dir, current_post.image))
+                files = os.listdir(old_dir)
+                if len(files) != 0: #if not empty
+                    for file in files:
+                        shutil.move(os.path.join(old_dir, file), collection_dir)
+                shutil.rmtree(old_dir)
 
             current_post.title = form.new_title.data
             current_post.description = form.new_desc.data
-
-        current_post.description = form.new_desc.data
-        current_post.image = generated_name
-        db.session.commit()
-        return redirect(url_for('post_content', current_post_id=current_post_id))
+            current_post.image = generated_name
+            db.session.commit()
+            return redirect(url_for('post_content', current_post_id=current_post_id))
 
     #Pre poulate form
     form.new_title.data = current_post.title
     form.new_desc.data = current_post.description
 
-    return render_template('editpost.html', title='Edit collection', form=form)
+    return render_template('editpost.html', title='Edit collection', form=form, current_post=current_post)
 
 @app.route('/editpostcontent', methods=['GET', 'POST'])
 @login_required
@@ -283,39 +305,45 @@ def editpostcontent():
     current_post = Post.query.get(current_post_id)
     current_postcontent_id = int(request.args.get("current_postcontent_id"))
     current_postcontent = PostContent.query.get(current_postcontent_id)
-    collection_dir = os.path.join(app.root_path, 'static') +  '/user_data/' + current_user.username + '/' + current_post.title
 
+    ## Gör en om ingen image vald lol då bara sätter den till samma?
     if form.validate_on_submit():
-        image = form.new_image.data
-        extension = os.path.splitext(image.filename)[1]
+        if form.new_image.data is None:
+            current_postcontent.title = form.new_title.data
+            current_postcontent.description = form.new_desc.data
+            db.session.commit()
+            return redirect(url_for('singlepost', current_post_id=current_post_id, current_postcontent_id=current_postcontent_id))
+        else:
+            collection_dir = os.path.join(app.root_path, 'static') +  '/user_data/' + current_user.username + '/' + current_post.title
+            image = form.new_image.data
+            extension = os.path.splitext(image.filename)[1]
 
-        if allowed_file(image.filename):
-            UPLOAD_FOLDER = collection_dir
-            image_filename = secure_filename(image.filename)
-            image.save(os.path.join(UPLOAD_FOLDER, image_filename))
-        else: 
-            flash("Filetype not allowed.")
-            return render_template('editpostcontent.html', title='Edit post', form=form)
+            if allowed_file(image.filename):
+                UPLOAD_FOLDER = collection_dir
+                image_filename = secure_filename(image.filename)
+                image.save(os.path.join(UPLOAD_FOLDER, image_filename))
+            else: 
+                flash("Filetype not allowed.")
+                return render_template('editpostcontent.html', title='Edit post', form=form, current_post=current_post, current_postcontent=current_postcontent)
 
-        generated_name = os.popen('python3 app/scripts/randomstring.py 30').read()
-        _list = list(generated_name)
-        generated_name = ""
-        for i in range(len(_list) - 1):
-            generated_name += _list[i]
-        generated_name += extension
-        generated_name = secure_filename(generated_name)
-        os.rename(os.path.join(UPLOAD_FOLDER, image_filename), os.path.join(UPLOAD_FOLDER, generated_name))
+            generated_name = os.popen('python3 app/scripts/randomstring.py 30').read()
+            _list = list(generated_name)
+            generated_name = ""
+            for i in range(len(_list) - 1):
+                generated_name += _list[i]
+            generated_name += extension
+            generated_name = secure_filename(generated_name)
+            os.rename(os.path.join(UPLOAD_FOLDER, image_filename), os.path.join(UPLOAD_FOLDER, generated_name))
 
-        os.remove(os.path.join(collection_dir, current_postcontent.image))
-        current_postcontent.title = form.new_title.data
-        current_postcontent.description = form.new_desc.data
-        current_postcontent.image = generated_name
-        db.session.commit()
-        return redirect(url_for('singlepost', current_post_id=current_post_id, current_postcontent_id=current_postcontent_id))
+            os.remove(os.path.join(collection_dir, current_postcontent.image))
+            current_postcontent.title = form.new_title.data
+            current_postcontent.description = form.new_desc.data
+            current_postcontent.image = generated_name
+            db.session.commit()
+            return redirect(url_for('singlepost', current_post_id=current_post_id, current_postcontent_id=current_postcontent_id))
 
     #Pre poulate form
     form.new_title.data = current_postcontent.title
     form.new_desc.data = current_postcontent.description
-    form.new_image.data = Image.open(os.path.join(collection_dir, current_postcontent.image))
 
-    return render_template('editpostcontent.html', title='Edit post', form=form)
+    return render_template('editpostcontent.html', title='Edit post', form=form, current_post=current_post, current_postcontent=current_postcontent)

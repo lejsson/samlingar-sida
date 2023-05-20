@@ -24,7 +24,7 @@ a {
 	color: white
 }
 
-a:hover:not(.logo):not(.submit):not(.modal-button) {
+a:hover:not(.logo):not(.submit):not(.modal-button):not(.dropdown .dropdown-content .dropdown-button) {
 	transition: transform .2s;
 	color: #decd87;
 }
@@ -45,22 +45,11 @@ a:hover:not(.logo):not(.submit):not(.modal-button) {
 	padding-bottom: 8px;
 }
 
-#topnav .menu {
-	margin-left: 50px;
-	cursor: pointer;
-	width: 42px;
-}
-
-#topnav .menu:hover {
-	transition: transform .2s;
-	transform: scale(1.05); /* Resize */
-}
-
 #topnav ul li {
 	display: inline-block;
 	font-size: 22px;
 	list-style-type: none;
-	margin-left: 20px; /* Ökar mellanrummet mellan varje individuell länk */
+	margin-left: 20px;
 	font-weight: bold;
 }
 
@@ -153,23 +142,17 @@ a:hover:not(.logo):not(.submit):not(.modal-button) {
 	/*outline-style:none;*/
 }
 
-#topnav .user img {
-	transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
 .dropdown {
 	position: relative;
 	display: inline-block;
 	margin-left: auto;
-	/*margin-right: 50px;*/
-	transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .dropdown-content {
 	/*padding-top: 10px;*/
 	display: flex;
 	flex-wrap: wrap;
-	margin-right: 20px;
+	justify-content: center;
 	margin-top: 5px;
 	font-size: 21px;
 	display: none;
@@ -182,6 +165,31 @@ a:hover:not(.logo):not(.submit):not(.modal-button) {
 	padding: 20px;
 	z-index: 3;
 	text-align: center;
+	padding-bottom: 40px;
+}
+
+.dropdown-button {
+	background-color: #decd87;
+	padding-top: 6px;
+	padding-bottom: 6px;
+	/*padding-inline: 3px;*/
+	border-radius: 10px;
+	max-width: 100px;
+	border: none;
+	cursor: pointer;
+	/*font-size: 70%;*/
+	font-size: 17px;
+	/*max-width: 150px;*/
+	text-align: center;
+	cursor: pointer;
+	outline: none;
+	color: black;
+	display: flex;
+	justify-content: center;
+}
+
+.dropdown-button:hover {
+	opacity: 0.9;
 }
 
 .submit {
@@ -230,26 +238,12 @@ button {
 	font-size: 20px;
 }
 
-.dropdown-content .submit:hover {
-	transition: transform .2s;
-	transform: scale(1.05); /* Resize */
-	color: white;
-}
-
-/*.dropdown:target .dropdown-content {*/
-	/*display: block;*/
-/*}*/
-
-.dropdown a:hover {
-	color: #decd87;
-}
-
 h1 {
 	text-decoration: underline;
 	margin-top: 50px;
 	text-decoration-thickness: 4px;
 	text-decoration-color: #decd87;
-	text-underline-offset: 12px;
+	text-underline-offset: 4px;
 	/*font-size: 200%;*/
 	text-align: center;
 	margin-left: auto;
@@ -295,7 +289,7 @@ h1 {
 	text-decoration: underline;
 	text-decoration-thickness: 3px;
 	text-decoration-color: #decd87;
-	text-underline-offset: 10px;
+	text-underline-offset: 4px;
 	margin-bottom: 14px;
 }
 
@@ -330,7 +324,7 @@ h1 {
 	text-decoration: underline;
 	text-decoration-thickness: 3px;
 	text-decoration-color: #decd87;
-	text-underline-offset: 10px;
+	text-underline-offset: 4px;
 	margin-bottom: 14px;
 	display: flex;
 	justify-content: center;
@@ -340,6 +334,10 @@ h1 {
 	transition: transform .2s;
 	transform: scale(1.04); /* Resize */
 	overflow: hidden;
+}
+
+form p {
+	font-size: 92%;
 }
 
 .form-container {
@@ -386,7 +384,7 @@ input {
 }
 
 .signup-text {
-	font-size: 17px; 
+	font-size: 75%; 
 	margin-top: -5px;
 }
 
@@ -397,19 +395,19 @@ input {
 }
 
 #page-container {
-  position: relative;
-  min-height: 100vh;
+	position: relative;
+	min-height: 100vh;
 }
 
 #content-wrap {
-  padding-bottom: 2.5rem;    /* Footer height */
+	padding-bottom: 2.5rem;
 }
 
 #page-footer {
 	position: absolute;
 	bottom: 0;
 	width: 100%;
-	height: 2.5rem;            /* Footer height */
+	height: 2.5rem;
 }
 
 #page-footer-content {
@@ -425,7 +423,7 @@ input {
 	display: inline-block;
 	font-size: 22px;
 	list-style-type: none;
-	margin-left: 30px; /* Ökar mellanrummet mellan varje individuell länk */
+	margin-left: 30px;
 }
 
 #page-footer-content .line-break {
@@ -433,8 +431,7 @@ input {
 }
 
 .singlepost_container {
-	margin-inline: 60px;
-	margin-top: 50px;
+	/*margin-inline: 60px;*/
 	background-color: #666666;
 	border-style: solid;
 	border-color: #ccccccff;
@@ -444,25 +441,25 @@ input {
 	padding-bottom: 170px;
 
 	display: flex;
-	/*justify-content: center;*/
 	width: 70%;
-	margin: auto; /* Centrerar rutorna */
-	margin-bottom: 25px; /* Skapar mellanrum mellan indivuella rutor */
-	margin-top: 70px; /* Skapar mellanrum mellan indivuella rutor */
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 25px;
+	margin-top: 70px;
 	flex-wrap: wrap-reverse;
+	justify-content: center;
 }
 
 .singlepost_container .text {
 	/*line-break: normal;*/
-	word-wrap: break-word;
-	margin-top: 20px;
+	/*word-wrap: break-word;*/
 	margin-bottom: 20px;
 }
 
 .singlepost_container img {
 	height: 100%;
 	/*max-width: 100%;*/
-	max-width: 60%;
+	max-width: 50%;
 	margin-right: 120px;
 }
 
@@ -471,7 +468,7 @@ input {
 	margin-bottom: 30px;
 	text-decoration-thickness: 4px;
 	text-decoration-color: #decd87;
-	text-underline-offset: 12px;
+	text-underline-offset: 4px;
 	/*font-size: 200%;*/
 	color: white; /* Färgen står ut lite mer */
 }
@@ -500,7 +497,6 @@ input {
 }
 
 .modal-button {
-  background-color: #04AA6D;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
@@ -523,7 +519,8 @@ button:hover {
 	display: flex;
 	justify-content: center;
 	padding-inline: 15px;
-
+	margin-left: auto;
+	margin-right: auto;
 }
 
 /* Add a color to the cancel button */
@@ -557,7 +554,7 @@ button:hover {
 .modal {
   /*display: none; [> Hidden by default <]*/
   position: fixed; /* Stay in place */
-  z-index: 4; /* Sit on top */
+  z-index: 1; /* Sit on top */
   left: 0;
   top: 0;
   width: 100%; /* Full width */
@@ -572,7 +569,7 @@ button:hover {
 	background-color: #717171;
 	margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
 	border: 4.634px solid #ccccccff;
-	width: 60%; /* Could be more or less, depending on screen size */
+	width: 50%; /* Could be more or less, depending on screen size */
 }
 
 /* Style the horizontal ruler */
@@ -645,27 +642,25 @@ hr {
 	margin-bottom: 10px;
 }
 
-/* Change styles for cancel button and delete button on extra small screens */
-@media screen and (max-width: 300px) {
-	.cancelbtn, .deletebtn {
-		width: 100%;
-  	}
-}
-
 @media screen and (max-width: 790px) {
 	.singlepost_container img {max-width: 100%;}
 }
 
 @media screen and (max-width: 700px) {
-	.singlepost_container img {max-width: 100%;}
 	.std-margin {margin-bottom: 30px;}
 
 	#topnav .user {
 		padding-inline: 14px;
-		margin-right: 10px;
+		margin-right: 20px;
 		font-size: 20px;
 	}
+	.modal-content { width: 70%;}
+	.cancelbtn, .deletebtn { max-width: 70%;}
 }
+
+@media screen and (max-width: 500px) {
+.modal { padding-top: 90px;}
+
 
 @media screen and (max-width: 450px) {
 	.std-margin {
@@ -676,7 +671,10 @@ hr {
 	.sidenav {padding-top: 15px;}
 	.sidenav a {font-size: 18px;}
 
-	.singlepost_container img {max-width: auto;}
+	.singlepost_container img {
+		max-width: 110%;
+		margin-right: 0;
+	}
 
 	h1 {font-size: 35px;}
 
@@ -704,7 +702,6 @@ hr {
 		max-width: 80%;
 	}
 
-	input { font-size: 60%; }
 	body {font-size: 20px}
 	.form-container {width: 350px}
 
@@ -718,6 +715,8 @@ hr {
 }
 
 @media screen and (max-width: 400px) {
+	.singlepost_container img {max-width: 120%;}
+
 	.post-box {
 		height: 428px;
 	}
@@ -734,15 +733,18 @@ hr {
 
 	.form-container {width: 320px}
 
-	#topnav .user img {max-width: 20%;}
+	#topnav .user img {max-width: 27%;}
 
 	#topnav .user {
 		font-size: 17px;
 		padding-inline: 7px;
 	}
+	input { font-size: 65%; }
 }
 
 @media screen and (max-width: 350px) {
+	.singlepost_container img {max-width: 140%;}
+
 	.post-box {
 		height: 378px;
 	}
@@ -760,7 +762,6 @@ hr {
 	h1 {font-size: 30px;}
 	
 	.form-container {width: 280px}
-	input { font-size: 47%; }
 
 	body {font-size: 18px}
 
@@ -771,11 +772,20 @@ hr {
 	}
 
 	#topnav ul li {font-size: 18px}
+	#submit {font-size: 12px}
 }
 
 @media screen and (max-width: 300px) {
-	#topnav .user {margin-right: 10}
+	.singlepost_container img {max-width: 180%;}
+
+	.modal-content { width: 80%;}
+	.cancelbtn, .deletebtn { max-width: 80%;}
+
 	#topnav .logo {margin-left: 10px}
+
+	#topnav .user {
+		margin-right: 10px;
+	}
 
 	.logotext {
 		font-size: 25px;
@@ -797,9 +807,11 @@ hr {
 	}
 
 	.post-box .text .name {
-		font-size: 104%;
+		font-size: 94%;
 	}
 
-	.form-container {width: 230px}
-	input { font-size: 40%; }
+	.form-container {width: 250px}
+	input { font-size: 60%}
+
+	h1 {font-size: 25px;}
 }

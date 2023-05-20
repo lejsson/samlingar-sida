@@ -1,32 +1,38 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Add to collection</h1>
-<div class="form-container">
-	<form action="" method="post" enctype="multipart/form-data">
-		{{ form.hidden_tag() }}
-		<p>
-			{{ form.title.label }}:<br>
-			{{ form.title(size=32) }}<br>
-			{% for error in form.title.errors %}
-			<span class="form-error">*{{ error }}</span>
-			{% endfor %}
-		</p>
-		<p>
-			{{ form.description.label }}:<br>
-			{{ form.description(size=32) }}<br>
-			{% for error in form.description.errors %}
-			<span class="form-error">*{{ error }}</span>
-			{% endfor %}
-		</p>
-		<p>
-			{{form.image.label}}:<br>
-			{{form.image(size=64)}} <br>
-			{% for error in form.image.errors %}
-			<span class="form-error">*{{ error }}</span>
-			{% endfor %}
-		</p>
-		<p>{{ form.submit() }}</p>
-	</form>
-</div>
+	<div class="collection-actions-container">
+		<a href="{{ url_for('index') }}">Return to collections</a>
+		<!--<div style="margin-top: 10px;"></div>-->
+		<a href="{{ url_for('post_content', current_post_id=current_post.id) }}">Return to collection "{{ current_post.title }}"</a>
+	</div>
+
+	<h1>Add to collection</h1>
+	<div class="form-container">
+		<form action="" method="post" enctype="multipart/form-data">
+			{{ form.hidden_tag() }}
+			<p>
+				{{ form.title.label }}:<br>
+				{{ form.title(size=32) }}<br>
+				{% for error in form.title.errors %}
+				<span class="form-error">*{{ error }}</span>
+				{% endfor %}
+			</p>
+			<p>
+				{{ form.description.label }}:<br>
+				{{ form.description(size=32) }}<br>
+				{% for error in form.description.errors %}
+				<span class="form-error">*{{ error }}</span>
+				{% endfor %}
+			</p>
+			<p>
+				{{form.image.label}}:<br>
+				{{form.image(size=64)}} <br>
+				{% for error in form.image.errors %}
+				<span class="form-error">*{{ error }}</span>
+				{% endfor %}
+			</p>
+			<p>{{ form.submit() }}</p>
+		</form>
+	</div>
 {% endblock %}
