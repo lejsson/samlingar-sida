@@ -1,7 +1,4 @@
-<!doctype html>
-<html>
-    <body>
-	{% extends "base.html" %} <!--Inkludera base.html, som innehåller navbar som ska inkluderas i varje fil-->
+{% extends "base.html" %} <!--Inkludera base.html, som innehåller navbar som ska inkluderas i varje fil-->
 	{% block content %}
 	<h1>About this site</h1>
 		<div class="std-margin">
@@ -12,6 +9,4 @@
 			<h3 class="description-header">What about the security of using this site?</h3>
 			<i>By using this site you agree to trust us with your data. The data that is stored is only your username and password, and the images and text that you submit to the site.</i>
 		</div>
-	{% endblock %}
-    </body>
-</html>
+{% endblock %}
