@@ -84,13 +84,24 @@
 	<div id="page-container">
 		<div id="content-wrap">
 			<nav id="topnav">
-				<a class="logo" href="{{ url_for('index') }}">
-					<img src="{{ url_for('static', filename='images/elements/logo.svg') }}" alt="logo icon">
+				{% if current_user.is_active %}
+					<a class="logo" href="{{ url_for('index') }}">
+						<img src="{{ url_for('static', filename='images/elements/logo.svg') }}" alt="logo icon">
 
-					<div class="logotext">
-						Kerätä
-					</div>
-				</a>
+						<div class="logotext">
+							Kerätä
+						</div>
+					</a>
+				{% else %}
+					<a class="logo" href="{{ url_for('login') }}">
+						<img src="{{ url_for('static', filename='images/elements/logo.svg') }}" alt="logo icon">
+
+						<div class="logotext">
+							Kerätä
+						</div>
+					</a>
+				{% endif %}
+
 
 				<ul>
 					<!--<li><a href="{{ url_for('index') }}">Your collections</a></li>-->
@@ -146,12 +157,21 @@
 			
 				<div class="line-break"></div>
 			
-				<a class="logo" href="{{ url_for('index') }}">
-					<img src="{{ url_for('static', filename='images/elements/logo.svg') }}" alt="logo icon">
-					<div class="logotext">
-						Kerätä
-					</div>
-				</a>
+				{% if current_user.is_active %}
+					<a class="logo" href="{{ url_for('index') }}">
+						<img src="{{ url_for('static', filename='images/elements/logo.svg') }}" alt="logo icon">
+						<div class="logotext">
+							Kerätä
+						</div>
+					</a>
+				{% else %}
+					<a class="logo" href="{{ url_for('login') }}">
+						<img src="{{ url_for('static', filename='images/elements/logo.svg') }}" alt="logo icon">
+						<div class="logotext">
+							Kerätä
+						</div>
+					</a>
+				{% endif %}
 			</div>
 		</footer>
 	</div>
