@@ -5,17 +5,11 @@
 }
 
 body {
-	/*color: #ecececff;*/
 	color: white;
-	/*font-family: Arial, Helvetica, sans-serif;*/
 	font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif;
 	font-size: 23px;
 	overflow-x: hidden; /* Strunta i att scrolla åt sidan */
 	background-color: #717171;
-	/*display: flex;*/
-          /*flex-direction: column;*/
-	/*display: grid;*/
-          /*grid-template-rows: 1fr auto;*/
 	margin-bottom: 160px;
 }
 
@@ -33,13 +27,11 @@ a:hover:not(.logo):not(.submit):not(.modal-button):not(.dropdown .dropdown-conte
 	display: flex;
 	background-color: #666666;
 	align-items: center;
-	/*height: 80px;*/
 	border-bottom: 5px solid #decd87;
 	width: 100%;
 	position: sticky;
 	top: 0;
-	z-index: 2; /* Gör så att element som blir påverkade av transform ej dyker upp ovanpå navbaren */
-	/* #decd87 */ /*Gula färgen lolle*/
+	z-index: 1; /* Gör så att element som blir påverkade av transform ej dyker upp ovanpå navbaren */
 	flex-wrap: wrap;
 	padding-top: 8px;
 	padding-bottom: 8px;
@@ -135,11 +127,6 @@ a:hover:not(.logo):not(.submit):not(.modal-button):not(.dropdown .dropdown-conte
 	align-items: center;
 	cursor: pointer;
 	user-select: none;
-	
-		/*-moz-user-select: none;*/
-		/*-webkit-user-select: none;*/
-		/*-ms-user-select: none;*/
-	/*outline-style:none;*/
 }
 
 .dropdown {
@@ -497,16 +484,16 @@ input {
 }
 
 .modal-button {
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
-  border: none;
-  cursor: pointer;
-  width: 100%;
+	color: white;
+	padding: 14px 20px;
+	margin: 8px 0;
+	border: none;
+	cursor: pointer;
+	width: 100%;
 }
 
 button:hover {
-  opacity:0.9;
+	opacity:0.9;
 }
 
 .deletebtn:hover {
@@ -525,8 +512,8 @@ button:hover {
 
 /* Add a color to the cancel button */
 .cancelbtn {
-  background-color: #ccc;
-  color: black;
+	background-color: #ccc;
+	color: black;
 }
 
 /* Add a color to the delete button */
@@ -546,22 +533,20 @@ button:hover {
 
 /* Add padding and center-align text to the container */
 .container {
-  padding: 16px;
-  text-align: center;
+	padding: 16px;
+	text-align: center;
 }
 
 /* The Modal (background) */
 .modal {
-  /*display: none; [> Hidden by default <]*/
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  /*background-color: #474e5d;*/
-  padding-top: 50px;
+	position: fixed; /* Stay in place */
+	z-index: 2; /* Sit on top */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	padding-top: 50px;
 }
 
 /* Modal Content/Box */
@@ -580,8 +565,8 @@ hr {
 
 .close:hover,
 .close:focus {
-  color: #f44336;
-  cursor: pointer;
+	color: #f44336;
+	cursor: pointer;
 }
 
 /* Clear floats */
@@ -596,8 +581,6 @@ hr {
 .center { /* Kan inte centrera <a> utan att ha i en div med detta? */
 	margin-left: auto;
 	margin-right: auto;
-	/*margin-top: 300px;*/
-	/*margin: 0 auto;*/
 	text-align: center;
 	margin-top: 40px;
 }

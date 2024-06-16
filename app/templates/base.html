@@ -6,9 +6,9 @@
 	<link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" type="text/css" media="all">
 	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" sizes="any">
         {% if title %}
-        <title>{{ title }}</title>
+        	<title>{{ title }}</title>
 	{% else %}
-        <title>Kerätä</title>
+        	<title>Kerätä</title>
         {% endif %}
 	
 	<!--<script>document.getElementById("user").addEventListener('mousedown', function(e){ e.preventDefault(); }, false);</script>-->
@@ -33,7 +33,6 @@
 	window.onclick = function(event) {
 	if (event.target == dropdown) {
 	    	dropdown.style.display = "none";
-		//closeDropdown()
 	  }
 	}
 	</script>

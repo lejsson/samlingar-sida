@@ -1,6 +1,5 @@
 from flask import render_template, request, url_for, redirect, flash, send_from_directory, g
 from flask_sqlalchemy import extension
-from flask_wtf.file import FileField
 from sqlalchemy import Boolean
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, NewPostForm, NewPostContentForm, EditPostForm, EditPostContentForm

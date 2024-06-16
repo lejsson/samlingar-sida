@@ -3,7 +3,6 @@ from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, validators
 from wtforms.validators import ValidationError, DataRequired, EqualTo
 from app.models import User
-# from PIL import Image
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired(), validators.Length(min=1, max=20)])
