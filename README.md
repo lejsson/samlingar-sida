@@ -8,4 +8,4 @@ A web application that lets you create and store virtual collections.
 
 **(venv) $** pip install -r requirements.txt
 
-**(venv) $** flask run
+**(venv) $** venv/bin/flask run
