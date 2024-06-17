@@ -1,4 +1,5 @@
 ## About
+![collection screenshot](./screen.png)
 A web application that lets you create and store virtual collections.
 
 ## Run
