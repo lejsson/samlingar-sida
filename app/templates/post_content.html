@@ -30,26 +30,28 @@
 	<br>
 	<button class="delete" onclick="openModal()">Remove this collection</button>
 	
-	<div class="post-box-container">
-		<a href="{{ url_for('addpostcontent', current_post_id=current_post.id) }}" class="post-box">
-			<img class="add-image" src="/static/images/elements/bigplus.svg" alt="add icon">
+	<div id="post-box-container" class="post-box-container">
+		<a href="{{ url_for('addpostcontent', current_post_id=current_post.id) }}" class="add-box post-box">
+            <img class="add-image" src="{{url_for('static', filename='images/elements/bigplus.svg')}}" alt="add icon">
 			<div class="add-name">Add to collection</div>
 		</a>
-	
+
 		{% set current_post_id=current_post.id %}
 		{% for post in postcontents %}
 			{% if post.parent == current_post.id %}
 				{% set image_path = file_dir + '/' + current_post.title + '/' + post.image %}
-				<a class="post-box" href="{{ url_for('singlepost', current_postcontent_id=post.id, current_post_id=current_post_id) }}">
+				<a id="post-box" class="post-box drag-box" href="{{ url_for('singlepost', current_postcontent_id=post.id, current_post_id=current_post_id) }}">
 					<img class="standard-image" src="{{ image_path }}" alt="{{ post.image }}">
 					{% if post.title %}
 						<div class="text">
 							<div class="name">{{ post.title }}</div>
 						</div>
 					{% endif %}
+                    <img src="{{url_for('static', filename='images/elements/move.svg')}}" id="grid-icon" width="25">
 				</a>
 			{% endif %}
 		{% endfor %}
 	</div>
-
+    <script src="{{url_for('static', filename='sortablejs/Sortable.min.js')}}"></script> <!--Moving around the post-boxes-->
+    <script src="{{url_for('static', filename='script/build/move_items.js')}}"></script>
 {% endblock %}

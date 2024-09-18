@@ -5,15 +5,17 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet" type="text/css" media="all">
 	<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" sizes="any">
-        {% if title %}
-        	<title>{{ title }}</title>
+    {% if title %}
+    <title>{{ title }}</title>
 	{% else %}
-        	<title>Kerätä</title>
-        {% endif %}
+    <title>Kerätä</title>
+    {% endif %}
 	
 	<!--<script>document.getElementById("user").addEventListener('mousedown', function(e){ e.preventDefault(); }, false);</script>-->
 
-	<script>
+    <!--<script src="{{url_for('static', filename='script/build/dropdown.js')}}"></script>-->
+
+    <script>
 	// Get the modal
 	var modal = document.getElementById('id01');
 	
@@ -119,16 +121,17 @@
 						{{ current_user.username }}
 						<img src="{{ url_for('static', filename='images/elements/arrow.svg') }}" id="arrow" alt="down arrow" width="28">
 					</div>
-			  		<div onclick="closeDropdown()" id="user-dropdown" class="dropdown-content">
+			  		<span onclick="closeDropdown()" id="user-dropdown" class="dropdown-content">
 						<a href="{{ url_for('index') }}">Your colletions</a>
 						<div style="padding-top: 10px;"></div>
 						<a class="dropdown-button" href="{{ url_for('logout') }}">Sign out</a> <br>
-					</div>
+					</span>
 				</span>
 				{% endif %}
 			</nav>
-			
-			{% block content %}{% endblock %} <!--Innehållet börjar-->
+            
+			<!--Innehållet börjar-->
+			{% block content %}{% endblock %}
 
 			<div class="messages"> <!--Error messages-->
 				{% with messages = get_flashed_messages() %}

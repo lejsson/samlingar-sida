@@ -137,8 +137,7 @@ a:hover:not(.logo):not(.submit):not(.modal-button):not(.dropdown .dropdown-conte
 
 .dropdown-content {
 	/*padding-top: 10px;*/
-	display: flex;
-	flex-wrap: wrap;
+	display: none;
 	justify-content: center;
 	margin-top: 5px;
 	font-size: 21px;
@@ -159,20 +158,17 @@ a:hover:not(.logo):not(.submit):not(.modal-button):not(.dropdown .dropdown-conte
 	background-color: #decd87;
 	padding-top: 6px;
 	padding-bottom: 6px;
-	/*padding-inline: 3px;*/
 	border-radius: 10px;
 	max-width: 100px;
 	border: none;
 	cursor: pointer;
-	/*font-size: 70%;*/
 	font-size: 17px;
-	/*max-width: 150px;*/
 	text-align: center;
 	cursor: pointer;
 	outline: none;
-	color: black;
 	display: flex;
 	justify-content: center;
+    align-items: center;
 }
 
 .dropdown-button:hover {
@@ -244,6 +240,8 @@ h1 {
 	justify-content: center;
 	margin-top: 20px;
 	margin-bottom: 30px;
+    position: relative;
+    align-items: center;
 }
 
 .post-box {
@@ -260,6 +258,8 @@ h1 {
 	cursor: pointer;
 	border-radius: 20px;
 	height: 548px;
+    position: relative;
+    float: none;
 	/*border-width: 3px;*/
 	/*border-radius: 20px;*/
 	/*border-style: solid;*/
@@ -292,7 +292,7 @@ h1 {
 	object-fit: cover;
 	object-position: top;
 	padding: 0;
-	border-top-left-radius: 20px; /* Bara rundade hörn i top */
+	border-top-left-radius: 20px; /* bara rundade hörn i top */
 	border-top-right-radius: 20px;
 	/*align-items: center;*/
 }
@@ -319,8 +319,30 @@ h1 {
 
 .post-box:hover {
 	transition: transform .2s;
-	transform: scale(1.04); /* Resize */
+	transform: scale(1.04); /* resize */
 	overflow: hidden;
+}
+
+.post-box #grid-icon {
+    cursor: move;
+    filter: invert(1);
+    /*position: absolute;*/
+    /*right: 0;*/
+    /*margin-top: 20px;*/
+    /*margin-right: 20px;*/
+
+    position: absolute; /* Enables absolute positioning */
+	bottom: 10px; /* Adjust the distance from the bottom */
+	right: 10px; /* Adjust the distance from the left */
+	width: 25px; /* Maintain the width */
+	height: auto; /* Maintain aspect ratio */
+    z-index: 10;
+}
+
+/* Style for dragging around items in a content folder in the grid */
+.drag-over {
+    border: 2px dashed #2196F3;
+    background-color: #e3f2fd;
 }
 
 form p {
